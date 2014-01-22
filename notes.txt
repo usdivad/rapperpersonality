@@ -1,0 +1,17 @@
+weigh the data e.g. region > fashion? multipliers
+
+try matching exact first? or filtering it down
+	- so you'll have some manual matching e.g. "Weed"
+
+for multiple e.g. "weed, acid"; combine them to give higher value or just default to first?
+	- think number sense; which will give you better rep
+
+
+
+
+
+
+- do't stub
+
+
+- parse both by # exact matches and "distance"
