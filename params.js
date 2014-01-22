@@ -1,29 +1,36 @@
 //out of 10
 
 // weed < pills < cocaine < acid
+/*
+	none: 0
+	weed: 2.5
+	pills/lean: 5
+	crack/cocaine: 7.5
+	molly/acid: 10
+*/
 var drugList = {
 	"Acid": 10,
-	"Cocaine": 5,
-	"Crack, Cocaine": 5,
-	"Crack, Pills": 7,
-	"Lean, Weed": 6,
-	"Molly, Weed": 6,
+	"Cocaine": 7.5,
+	"Crack, Cocaine": 7.5,
+	"Crack, Pills": 6.25,
+	"Lean, Weed": 3.75,
+	"Molly, Weed": 6.25,
 	"None": 0,
-	"Pills": 4,
-	"Pills, Weed": 6,
-	"Weed": 3,
-	"Weed, Acid": 9,
-	"Weed, Cocaine": 8,
-	"Weed, Cocaine, Crack": 8,
-	"Weed, Lean": 6,
-	"Weed, Lean, Pills": 7,
-	"Weed, Molly": 6
+	"Pills": 5,
+	"Pills, Weed": 3.75,
+	"Weed": 2.5,
+	"Weed, Acid": 6.25,
+	"Weed, Cocaine": 6.25,
+	"Weed, Cocaine, Crack": 6.25,
+	"Weed, Lean": 3.75,
+	"Weed, Lean, Pills": 3.75,
+	"Weed, Molly": 6.25
 }
 
 //5 cats: mt dew < beer < bottomshelf < champagne/wine < topshelf
 var drinkList = {
 	"Beer": 2.5,
-	"beer/bottom shelf liquor": 4.5,
+	"beer/bottom shelf liquor": 3.75,
 	"bottom shelf liquor": 5,
 	"Champagne/Wine": 7.5,
 	"Mountain Dew": 0,
