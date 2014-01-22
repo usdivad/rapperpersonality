@@ -120,20 +120,22 @@ function find_most_matches(rapper1, rapperList, paramList) {
 		}
 	}
 
-	//sort by matches
+	//sort by matches in *descending* order
 	rapperList.sort(function(a, b) {
 		var aMatch = a["Matches"];
 		var bMatch = b["Matches"];
 		if (aMatch < bMatch) {
-			return -1;
+			return 1;
 		}
 		else if (aMatch > bMatch) {
-			return 1;
+			return -1;
 		}
 		else {
 			return 0;
 		}
-	})
+	});
+
+	return rapperList;
 }
 
 function num_matches(rapper1, rapper2) {

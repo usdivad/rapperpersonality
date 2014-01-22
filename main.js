@@ -34,7 +34,7 @@ function main() {
 		var most_matches = find_most_matches(r1, rappers, allParams);
 		console.log("Closest rappers according to most matches are: ");
 		for (var i=0; i<5; i++) {
-			console.log(most_matches[i]["Rapper"] + " with " + most_matches[i]["Distance"] + " matches");
+			console.log(most_matches[i]["Rapper"] + " with " + most_matches[i]["Matches"] + " matches");
 		}
 		console.log(most_matches);
 	});
