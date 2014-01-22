@@ -110,6 +110,7 @@ function find_closest(rapper1, rapperList, paramList) {
 	return rapperList;
 }
 
+//Find the most matches for a given rapper
 function find_most_matches(rapper1, rapperList, paramList) {
 	//get number of matches for each rapper
 	for (var i=0; i<rapperList.length; i++) {
@@ -138,6 +139,7 @@ function find_most_matches(rapper1, rapperList, paramList) {
 	return rapperList;
 }
 
+//Finds number of matches between any two rappers
 function num_matches(rapper1, rapper2) {
 	var n = 0;
 	for (key in rapper1) {
