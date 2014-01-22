@@ -1,3 +1,8 @@
+1/22
+5pm:
+	- it's ok that you have those ind vars in params.js 
+
+2pm:
 weigh the data e.g. region > fashion? multipliers
 
 try matching exact first? or filtering it down

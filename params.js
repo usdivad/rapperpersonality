@@ -1,4 +1,4 @@
-//out of 10
+//all scores are out of 10
 
 // weed < pills < cocaine < acid
 /*
