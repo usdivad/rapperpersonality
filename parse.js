@@ -73,7 +73,9 @@ function attribute_difference(attr1, attr2) {
 	return Math.abs(attr2 - attr1);
 }
 
+//Find closest rappers
 function find_closest(rapper1, rapperList, paramList) {
+	//get dist for each rapper
 	for (var i=0; i<rapperList.length; i++) {
 		var rapper2 = rapperList[i];
 		var dist = manhattan_distance(rapper1, rapper2, paramList);
@@ -81,7 +83,9 @@ function find_closest(rapper1, rapperList, paramList) {
 			rapper2["Distance"] = dist;
 		}
 	}
-	rapperList.sort(function(a,b) {
+
+	//sort by dist
+	rapperList.sort(function(a, b) {
 		var aDist = a["Distance"];
 		var bDist = b["Distance"];
 		if (aDist < bDist) {
@@ -91,36 +95,53 @@ function find_closest(rapper1, rapperList, paramList) {
 			return 1;
 		}
 		else {
+			//try randomization
+			/*var dice = Math.random();
+			if (dice >= 0.5) {
+				return 1;
+			}
+			else {
+				return -1;
+			}*/
 			return 0;
 		}
 	})
+
 	return rapperList;
 }
 
-//Maindo
-function main() {
-	var rappers;
-
-	//JSON req
-	$.getJSON("rapper_stats.json", function(data) {
-		console.log(data);
-		rappers = data;
-		console.log(rappers.length);
-
-		//for (rapper in rappers) {
-		for (var i=0; i<rappers.length; i++) {
-			var rapper = rappers[i];
-			//console.log(rapper);
-			rapper_score = get_score(rapper);
-			//console.log(rapper["Rapper"] + ": " + rapper_score);
+function find_most_matches(rapper1, rapperList, paramList) {
+	//get number of matches for each rapper
+	for (var i=0; i<rapperList.length; i++) {
+		var rapper2 = rapperList[i];
+		var matches = num_matches(rapper1, rapper2);
+		if (typeof matches != "undefined") {
+			rapper2["Matches"] = matches;
 		}
+	}
 
-		var r0 = rappers[0];
-		var r1 = rappers[23];
-		//var r1 = {"Rapper":"Mister Twister","Drug of choice":"Weed","Drink of choice":"Beer","Age/Audio Format":"MP3","Fashion":"Hipster","Region":"West Coast","Criminal History":"Might have killed someone","Food/Fitness/Body Type":"stocky","Intelligence":"Dumb","Pimp Hand":"Legit Pimp","Tattoos":"many","Sound":"Classic"};
-		console.log("dist between " + r0["Rapper"] + " and " + r1["Rapper"] + " is " + manhattan_distance(r0, r1, allParams));
-		console.log(find_closest(r1, rappers, allParams));
-	});
+	//sort by matches
+	rapperList.sort(function(a, b) {
+		var aMatch = a["Matches"];
+		var bMatch = b["Matches"];
+		if (aMatch < bMatch) {
+			return -1;
+		}
+		else if (aMatch > bMatch) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	})
 }
 
-main();
+function num_matches(rapper1, rapper2) {
+	var n = 0;
+	for (key in rapper1) {
+		if (rapper1[key] == rapper2[key]) { //no e.c. needed?
+			n++;
+		}
+	}
+	return n;
+}
