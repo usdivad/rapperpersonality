@@ -5,14 +5,23 @@ function main() {
 	//JSON req
 	$.getJSON("rapper_stats.json", function(data) {
 		//rappers = data;
+		createForm(data);
 		test(data);
 
 	}); //end JSON req
 }
 
-function getInput(data) {
-	var inputDivs = {
-
+function createForm(data) {
+	var example = data[0];
+	var content = $("#content");
+	for (key in example) {
+		var inner = "";
+		inner += "<ul>"
+		if (key != "Rapper") {
+			inner += key + "<br>";
+		}
+		inner += "</ul>"
+		content.append(inner);
 	}
 }
 
