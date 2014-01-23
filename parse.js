@@ -1,36 +1,3 @@
-
-//Get rapper score (overall)
-function get_score(rapper) {
-	var r_score = 0;
-
-	//get attrs
-	//var name = rapper["Rapper"];
-	var drug = rapper["Drug of choice"];
-	var drink = rapper["Drink of choice"];
-	var age = rapper["Age/Audio Format"];
-	var fashion = rapper["Fashion"];
-	var region = rapper["Region"];
-	var criminal = rapper["Criminal History"];
-	var fitness = rapper["Food/Fitness/Body Type"];
-	var intelligence = rapper["Intelligence"];
-	var pimp = rapper["Pimp Hand"];
-	var tattoos = rapper["Tattoos"];
-	var sound = rapper["Sound"];
-
-
-	//making the score
-	//r_score = drugList[drug] + drinkList[drink] + ageList[age];
-	r_score = parse(drugList, drug) + parse(drinkList, drink) + parse(ageList, age);
-	return r_score;
-}
-
-function convert_to_number(rapper) {
-	//get attrs
-	var drug = rapper["Drug of choice"];
-	var drink = rapper["Drink of choice"];
-	var age = rapper["Age/Audio Format"];
-}
-
 //Parse an individual attribute from a list of scores
 function parse(list, attr) {
 	if (typeof list[attr] != "undefined") {

@@ -1,20 +1,28 @@
 //Maindo
 function main() {
-	var rappers;
+	//var rappers;
 
 	//JSON req
 	$.getJSON("rapper_stats.json", function(data) {
+		//rappers = data;
+		test(data);
+
+	}); //end JSON req
+}
+
+function getInput(data) {
+	var inputDivs = {
+
+	}
+}
+
+//Tester
+function test(data) {
+
+		//Data parsing
 		console.log(data);
 		rappers = data;
 		console.log(rappers.length);
-
-		//for (rapper in rappers) {
-		for (var i=0; i<rappers.length; i++) {
-			var rapper = rappers[i];
-			//console.log(rapper);
-			rapper_score = get_score(rapper);
-			//console.log(rapper["Rapper"] + ": " + rapper_score);
-		}
 
 		//Tester params
 		var str = "";
@@ -49,8 +57,6 @@ function main() {
 		}
 		//console.log(most_matches);
 		console.log(str);
-
-	}); //end JSON req
 }
 
 $(document).ready(function() {
