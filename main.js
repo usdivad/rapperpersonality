@@ -6,12 +6,16 @@ function main() {
 	$.getJSON("rapper_stats.json", function(data) {
 		//rappers = data;
 		$("#inputForm").append(createForm(data, allParams));
+		$("#submitButton").click(function() {
+			getSubmit(data);
+		});
 		//getSubmit(data);
-		test(data, allParams);
+		//test(data, allParams);
 
 	}); //end JSON req
 }
 
+//Creates form, fills in attributes
 function createForm(data, paramList) {
 	//generating the form params
 	var example = data[0];
@@ -38,21 +42,26 @@ function createForm(data, paramList) {
 
 	//submit action
 
-
 	//return the created form
 	return inner;
 }
 
+//Creates user profile based on form data
 function getSubmit(data) {
 	var example = data[0];;
-	var user;
+	var user = {};
 	for (key in example) {
 		if (key != "Rapper") {
 			var inputQuery = "input:radio[name=" + key + "]:checked";
-			console.log(inputQuery);
-			user[key] = $(inputQuery).val();
+			//console.log(inputQuery);
+			var q_value = $(inputQuery).val();
+			if (typeof q_value != "undefined") {
+				user[key] = q_value;
+				//console.log(user["key"]);
+			}
 		}
 	}
+	console.log(user);
 }
 
 function setInput(data, paramList) {
