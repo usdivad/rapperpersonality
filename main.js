@@ -5,8 +5,9 @@ function main() {
 	//JSON req
 	$.getJSON("rapper_stats.json", function(data) {
 		//rappers = data;
-		$("#content").append(createForm(data, allParams));
-		//test(data, allParams);
+		$("#inputForm").append(createForm(data, allParams));
+		//getSubmit(data);
+		test(data, allParams);
 
 	}); //end JSON req
 }
@@ -16,30 +17,42 @@ function createForm(data, paramList) {
 	var example = data[0];
 	//var content = $("#content");
 	var inner = "";
-	inner += "<form id='inputForm'>";
+	//inner += "<form id='inputForm'>";
 	for (key in example) {
-		if (key != "Rapper") { //no rappers, only attrs
+		if (key != "Rapper") { //no rappers in paramList, only attrs
 			inner += "<strong>" + key + "</strong><br>";
 			var keyList = paramList[key];
-			console.log(keyList);
+			//console.log(keyList);
 			if (typeof keyList != "undefined") {
 				for (pKey in keyList) {
-					console.log(pKey);
+					//console.log(pKey);
 					inner += "<input type='radio' "
 							+ "name='" + key + "'"
 							+ "value='" + pKey + "'"
 							+ ">" + pKey + "<br>";
 				}
 			}
-		}
+		} //endif
 	}
-	inner += "</form>";
+	//inner += "</form>";
 
 	//submit action
 
 
 	//return the created form
 	return inner;
+}
+
+function getSubmit(data) {
+	var example = data[0];;
+	var user;
+	for (key in example) {
+		if (key != "Rapper") {
+			var inputQuery = "input:radio[name=" + key + "]:checked";
+			console.log(inputQuery);
+			user[key] = $(inputQuery).val();
+		}
+	}
 }
 
 function setInput(data, paramList) {

@@ -144,15 +144,15 @@ var soundList = {
 }
 
 var allParams = {
-	"Drug of choice": drugList,
-	"Drink of choice": drinkList,
-	"Age/Audio Format": ageList,
+	"DrugOfChoice": drugList,
+	"DrinkOfChoice": drinkList,
+	"Age_AudioFormat": ageList,
 	"Fashion": fashionList,
 	"Region": regionList,
-	"Criminal History": criminalList,
-	"Food/Fitness/Body Type": fitnessList,
+	"CriminalHistory": criminalList,
+	"Food_Fitness_BodyType": fitnessList,
 	"Intelligence": intelligenceList,
-	"Pimp Hand": pimpList,
+	"PimpHand": pimpList,
 	"Tattoos": tattoosList,
 	"Sound": soundList
 };
