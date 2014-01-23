@@ -11,7 +11,7 @@ function main() {
 			$("#results").html(r);
 		});
 		//getSubmit(data);
-		//test_parse(data, allParams);
+		test_parse(data, allParams);
 
 	}); //end JSON req
 }

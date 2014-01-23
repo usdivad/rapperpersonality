@@ -31,7 +31,7 @@ function createForm(data, paramList) {
 	//submit action
 
 	//return the created form
-	console.log(inner);
+	//console.log(inner);
 	return inner;
 }
 

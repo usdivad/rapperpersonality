@@ -1,8 +1,30 @@
 1/23
-weighting
-combining the two algorithms
-implement the multiple checkboxes etc.
-input questions
+
+- back:
+	- weighing: sound=*3, region=*2
+	- combining the two algorithms
+	- ***implement the multiple checkboxes etc.!!
+		- year
+		- sound
+		- drug
+		- liquor
+
+		- have options see how many picked match. 
+			- use score for the checkbox ones? and just match for the other
+			- (obv there's no single objective measure; just like prediction)
+	- input questions
+- front:
+	- boot
+	- wordpress integration
+
+
+You are Joey Bada$$! You have 5 traits in common and a rap proximity of 23.25
+
+However, you could also be:
+Mos Def aka Yasin Bey (4 traits and a rap proximity of 28.08) 
+A$AP Ferg (4 traits and a rap proximity of 23.66) 
+Run- Dmc (4 traits and a rap proximity of 27.75) 
+Childish Gambino (4 traits and a rap proximity of 22.5) 
 
 
 1/22
