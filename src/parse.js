@@ -1,23 +1,37 @@
 //Calculate personality based on MD and matches from rapper database
 function calculatePersonality(user, data, paramList) {
 		var NUM_OUTPUT = 5;
-		//Testing Manhattan distance
-		var closest = find_closest(user, data, paramList);
 		var str = "<br><br>";
-		str += "Closest rappers according to Manhattan distance are: <br>";
-		for (var i=0; i<NUM_OUTPUT; i++) {
-			str += closest[i]["Rapper"] + " with a distance of " + closest[i]["Distance"] + "<br>";
-		}
-		console.log(closest);
 
+		//Sample output
+		var most_matches = find_most_matches(user, data);
+		var closest = find_closest(user, data, paramList);
+		var who = most_matches[0]
+		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
+			+ who["Matches"] + " traits in common and a rap proximity of " + who["Distance"] + "<br><br>";
+		str += "However, you could also be:<br>"
+		for (var i=1; i<NUM_OUTPUT; i++) {
+			var alt_who = most_matches[i];
+			str += "<strong>" + alt_who["Rapper"] + "</strong> ("
+				+ alt_who["Matches"] + " traits and a rap proximity of " + alt_who["Distance"] + ") <br>";
+		}
+
+		/*
 		//Testing matches
 		var most_matches = find_most_matches(user, data);
 		str += "<br> Closest rappers according to most matches are: <br>";
 		for (var i=0; i<NUM_OUTPUT; i++) {
 			str += most_matches[i]["Rapper"] + " with " + most_matches[i]["Matches"] + " matches <br>";
 		}
-		//console.log(most_matches);
-		console.log(str);
+
+		//Testing Manhattan distance
+		var closest = find_closest(user, data, paramList);
+		str += "Closest rappers according to distance are: <br>";
+		for (var i=0; i<NUM_OUTPUT; i++) {
+			str += closest[i]["Rapper"] + " with a distance of " + closest[i]["Distance"] + "<br>";
+		}
+		*/
+
 		return str;
 }
 

@@ -9,7 +9,7 @@ function createForm(data, paramList) {
 	//inner += "<form id='inputForm'>";
 	for (key in example) {
 		if (key != "Rapper") { //no rappers in paramList, only attrs
-			inner += "<strong>" + key + "</strong><br>";
+			inner += "<br><strong>" + key + "</strong><br>";
 			var keyList = paramList[key];
 			//console.log(keyList);
 			if (typeof keyList != "undefined") {
@@ -17,17 +17,21 @@ function createForm(data, paramList) {
 					//console.log(pKey);
 					inner += "<input type='radio' "
 							+ "name='" + key + "'"
+							+ "id='" + pKey + "'"
 							+ "value='" + pKey + "'"
-							+ ">" + pKey + "<br>";
+							+ ">" + " "
+							+ "<label for='" + pKey + "'>"
+							+ pKey + "</label><br>";
 				}
 			}
 		} //endif
 	}
 	//inner += "</form>";
-
+	inner += "<br>";
 	//submit action
 
 	//return the created form
+	console.log(inner);
 	return inner;
 }
 
