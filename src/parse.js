@@ -3,10 +3,10 @@ function calculatePersonality(user, data, paramList) {
 		var NUM_OUTPUT = 5;
 		var str = "<br><br>";
 
-		//Sample output
+		//Sample output; note
 		var most_matches = find_most_matches(user, data);
 		var closest = find_closest(user, data, paramList);
-		var who = most_matches[0]
+		var who = most_matches[0];
 		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
 			+ who["Matches"] + " traits in common and a rap proximity of " + who["Distance"] + "<br><br>";
 		str += "However, you could also be:<br>"
@@ -79,6 +79,7 @@ function attribute_difference(attr1, attr2) {
 
 //Find closest rappers
 function find_closest(rapper1, rapperList, paramList) {
+	var closestList = [];
 	//get dist for each rapper
 	for (var i=0; i<rapperList.length; i++) {
 		var rapper2 = rapperList[i];
@@ -86,10 +87,11 @@ function find_closest(rapper1, rapperList, paramList) {
 		if (typeof dist != "undefined") {
 			rapper2["Distance"] = dist;
 		}
+		closestList.push(rapper2);
 	}
 
 	//sort by dist
-	rapperList.sort(function(a, b) {
+	closestList.sort(function(a, b) {
 		var aDist = a["Distance"];
 		var bDist = b["Distance"];
 		if (aDist < bDist) {
@@ -109,13 +111,14 @@ function find_closest(rapper1, rapperList, paramList) {
 			}*/
 			return 0;
 		}
-	})
+	});
 
-	return rapperList;
+	return closestList;
 }
 
 //Find the most matches for a given rapper
 function find_most_matches(rapper1, rapperList) {
+	var matchesList = [];
 	//get number of matches for each rapper
 	for (var i=0; i<rapperList.length; i++) {
 		var rapper2 = rapperList[i];
@@ -123,10 +126,11 @@ function find_most_matches(rapper1, rapperList) {
 		if (typeof matches != "undefined") {
 			rapper2["Matches"] = matches;
 		}
+		matchesList.push(rapper2);
 	}
 
 	//sort by matches in *descending* order
-	rapperList.sort(function(a, b) {
+	matchesList.sort(function(a, b) {
 		var aMatch = a["Matches"];
 		var bMatch = b["Matches"];
 		if (aMatch < bMatch) {
@@ -140,7 +144,7 @@ function find_most_matches(rapper1, rapperList) {
 		}
 	});
 
-	return rapperList;
+	return matchesList;
 }
 
 //Finds number of matches between any two rappers

@@ -1,3 +1,10 @@
+1/23
+weighting
+combining the two algorithms
+implement the multiple checkboxes etc.
+input questions
+
+
 1/22
 5pm:
 	- it's ok that you have those ind vars in params.js 
