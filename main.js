@@ -5,28 +5,49 @@ function main() {
 	//JSON req
 	$.getJSON("rapper_stats.json", function(data) {
 		//rappers = data;
-		createForm(data);
-		test(data);
+		$("#content").append(createForm(data, allParams));
+		//test(data, allParams);
 
 	}); //end JSON req
 }
 
-function createForm(data) {
+function createForm(data, paramList) {
+	//generating the form params
 	var example = data[0];
-	var content = $("#content");
+	//var content = $("#content");
+	var inner = "";
+	inner += "<form id='inputForm'>";
 	for (key in example) {
-		var inner = "";
-		inner += "<ul>"
-		if (key != "Rapper") {
-			inner += key + "<br>";
+		if (key != "Rapper") { //no rappers, only attrs
+			inner += "<strong>" + key + "</strong><br>";
+			var keyList = paramList[key];
+			console.log(keyList);
+			if (typeof keyList != "undefined") {
+				for (pKey in keyList) {
+					console.log(pKey);
+					inner += "<input type='radio' "
+							+ "name='" + key + "'"
+							+ "value='" + pKey + "'"
+							+ ">" + pKey + "<br>";
+				}
+			}
 		}
-		inner += "</ul>"
-		content.append(inner);
 	}
+	inner += "</form>";
+
+	//submit action
+
+
+	//return the created form
+	return inner;
+}
+
+function setInput(data, paramList) {
+	//$("li")
 }
 
 //Tester
-function test(data) {
+function test(data, paramList) {
 
 		//Data parsing
 		console.log(data);
@@ -51,7 +72,7 @@ function test(data) {
 		console.log(r1);
 
 		//Testing Manhattan distance
-		var closest = find_closest(r1, rappers, allParams);
+		var closest = find_closest(r1, rappers, paramList);
 		str += "Closest rappers according to Manhattan distance are: \n";
 		for (var i=0; i<NUM_OUTPUT; i++) {
 			str += closest[i]["Rapper"] + " with a distance of " + closest[i]["Distance"] + "\n";
