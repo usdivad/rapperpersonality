@@ -3,7 +3,7 @@ function main() {
 	//var rappers;
 
 	//JSON req
-	$.getJSON("rapper_stats.json", function(data) {
+	$.getJSON("./src/rapper_stats.json", function(data) {
 		//rappers = data;
 		$("#inputForm").append(createForm(data, allParams));
 		$("#submitButton").click(function() {
