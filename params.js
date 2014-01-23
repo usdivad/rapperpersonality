@@ -8,6 +8,7 @@
 	crack/cocaine: 7.5
 	molly/acid: 10
 */
+
 var drugList = {
 	"Acid": 10,
 	"Cocaine": 7.5,
