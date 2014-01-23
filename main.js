@@ -47,9 +47,10 @@ function createForm(data, paramList) {
 	return inner;
 }
 
+//Submit function
 function getSubmit(data, paramList) {
 	var you = getUser(data);
-	var results = getPersonality(you, data, paramList);
+	var results = calculatePersonality(you, data, paramList);
 	return results;
 }
 
@@ -75,7 +76,8 @@ function getUser(data) {
 	return user;
 }
 
-function getPersonality(user, data, paramList) {
+//Calculate personality based on MD and matches from rapper database
+function calculatePersonality(user, data, paramList) {
 		var NUM_OUTPUT = 5;
 		//Testing Manhattan distance
 		var closest = find_closest(user, data, paramList);
@@ -95,10 +97,6 @@ function getPersonality(user, data, paramList) {
 		//console.log(most_matches);
 		console.log(str);
 		return str;
-}
-
-function setInput(data, paramList) {
-	//$("li")
 }
 
 //Tester
