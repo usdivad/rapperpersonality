@@ -7,7 +7,8 @@ function main() {
 		//rappers = data;
 		$("#inputForm").append(createForm(data, allParams));
 		$("#submitButton").click(function() {
-			getSubmit(data);
+			var r = getSubmit(data, allParams);
+			$("#results").html(r);
 		});
 		//getSubmit(data);
 		//test(data, allParams);
@@ -46,8 +47,14 @@ function createForm(data, paramList) {
 	return inner;
 }
 
+function getSubmit(data, paramList) {
+	var you = getUser(data);
+	var results = getPersonality(you, data, paramList);
+	return results;
+}
+
 //Creates user profile based on form data
-function getSubmit(data) {
+function getUser(data) {
 	var example = data[0];;
 	var user = {};
 	for (key in example) {
@@ -59,9 +66,35 @@ function getSubmit(data) {
 				user[key] = q_value;
 				//console.log(user["key"]);
 			}
+			else {
+				console.log("You're missing a " + key + ", son");
+			}
 		}
 	}
 	console.log(user);
+	return user;
+}
+
+function getPersonality(user, data, paramList) {
+		var NUM_OUTPUT = 5;
+		//Testing Manhattan distance
+		var closest = find_closest(user, data, paramList);
+		var str = "<br><br>";
+		str += "Closest rappers according to Manhattan distance are: <br>";
+		for (var i=0; i<NUM_OUTPUT; i++) {
+			str += closest[i]["Rapper"] + " with a distance of " + closest[i]["Distance"] + "<br>";
+		}
+		console.log(closest);
+
+		//Testing matches
+		var most_matches = find_most_matches(user, data);
+		str += "<br> Closest rappers according to most matches are: <br>";
+		for (var i=0; i<NUM_OUTPUT; i++) {
+			str += most_matches[i]["Rapper"] + " with " + most_matches[i]["Matches"] + " matches <br>";
+		}
+		//console.log(most_matches);
+		console.log(str);
+		return str;
 }
 
 function setInput(data, paramList) {
