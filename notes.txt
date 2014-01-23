@@ -3,6 +3,7 @@
 - back:
 	- weighing: sound=*3, region=*2
 	- combining the two algorithms
+		- e.g. go by # matches, but do a check on proximity to make sure it's not too high
 	- ***implement the multiple checkboxes etc.!!
 		- year
 		- sound
