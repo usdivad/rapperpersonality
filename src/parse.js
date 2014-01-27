@@ -3,9 +3,9 @@ function calculatePersonality(user, data, paramList) {
 		var NUM_OUTPUT = 5;
 		var str = "<br><br>";
 
-		//Sample output; note
-		var most_matches = find_most_matches(user, data);
+		//Sample output; ordered primarily by #matches and secondarily by proximity
 		var closest = find_closest(user, data, paramList);
+		var most_matches = find_most_matches(user, closest);
 		var who = most_matches[0];
 		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
 			+ who["Matches"] + " traits in common and a rap proximity of " + who["Distance"] + "<br><br>";
@@ -33,6 +33,10 @@ function calculatePersonality(user, data, paramList) {
 		*/
 
 		return str;
+}
+
+function mergeMatches() {
+	
 }
 
 //Parse an individual attribute from a list of scores
