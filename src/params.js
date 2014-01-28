@@ -38,13 +38,13 @@ var drinkList = {
 	"top shelf liquor": 10
 }
 
-//vinyl < cassettes < cds < mixtapes < mp3s
+//by decade
 var ageList = {
-	"Cassettes": 2.5,
-	"CDs": 5,
-	"Mixtapes": 7.5,
-	"MP3": 10,
-	"Vinyl": 0
+	"1980s": 2.5,
+	"1990s": 5,
+	"2000s": 7.5,
+	"2010s": 10,
+	"1970s": 0
 }
 
 //just one for each
@@ -146,7 +146,7 @@ var soundList = {
 var allParams = {
 	"DrugOfChoice": drugList,
 	"DrinkOfChoice": drinkList,
-	"Age_AudioFormat": ageList,
+	"Decade": ageList,
 	"Fashion": fashionList,
 	"Region": regionList,
 	"CriminalHistory": criminalList,
