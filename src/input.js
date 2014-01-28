@@ -1,4 +1,5 @@
 //Creates form, fills in attributes
+//requires: paramList from params.js
 function createForm(data, paramList) {
 	//generating the form params
 	var example = data[0];
@@ -34,9 +35,10 @@ function createForm(data, paramList) {
 }
 
 //Submit function
-function getSubmit(data, paramList) {
+//1/28 removed: paramList parameter
+function getSubmit(data) {
 	var you = getUser(data);
-	var results = calculatePersonality(you, data, paramList);
+	var results = calculatePersonality(you, data);
 	return results;
 }
 
@@ -67,7 +69,7 @@ function getUser(data) {
 			}
 		}
 	}
-	//console.log("You are: ");
-	//console.log(user);
+	console.log("You are: ");
+	console.log(user);
 	return user;
 }

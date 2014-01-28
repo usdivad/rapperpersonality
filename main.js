@@ -7,11 +7,11 @@ function main() {
 		//rappers = data;
 		//$("#inputForm").append(createForm(data, allParams));
 		$("#submitButton").click(function() {
-			var r = getSubmit(data, allParams);
+			var r = getSubmit(data);
 			$("#results").html(r);
 		});
 		//getSubmit(data);
-		test_parse(data, allParams);
+		test_parse(data);
 
 	}); //end JSON req
 }
