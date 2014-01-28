@@ -15,7 +15,8 @@ function calculatePersonality(user, data) {
 				+ "a compatibility score of " + who["Matches"] + "<br><br>";
 		//Rest
 		str += "However, you could also be:<br>"
-		for (var i=1; i<NUM_OUTPUT; i++) {
+		//i=0 for shuffled, i=1 for original
+		for (var i=0; i<NUM_OUTPUT; i++) {
 			var alt_who = most_matches_shuffled[i];
 			if (typeof alt_who == "undefined") { //make sure we haven't run out of rappers
 				i = NUM_OUTPUT;
@@ -53,8 +54,10 @@ function filter_by_region(user, data) {
 function shuffle(original_array) {
   var array = [];
   for (var i=1; i<original_array.length; i++) { //remove first element
-  	array[i-1] = original_array[i];
-  }		
+  	array.push(original_array[i]);
+  }
+  console.log("pre-shuf");
+  console.log(array);	
   var currentIndex = array.length
     , temporaryValue
     , randomIndex
