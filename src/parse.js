@@ -1,19 +1,24 @@
 //Calculate personality based on MD and matches from rapper database
+//uses matches.js and manhattan
 //1/28 removed: paramList parameter
 function calculatePersonality(user, data) {
-		var NUM_OUTPUT = 5;
+
+		var NUM_OUTPUT = 10;
 		var str = "<br><br>";
 
 		//Sample output; ordered primarily by #matches and secondarily by proximity
 		//var closest = find_closest(user, data, paramList);
+		//var data_by_decade = sort_decade(user, data)
+		//console.log(data_by_decade);
 		var most_matches = find_most_matches(user, data);
+		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
 		var who = most_matches[0];
 		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
 				+ "a compatibility score of " + who["Matches"] + "<br><br>";
 			//+ who["Matches"] + " traits in common and a rap proximity of " + who["Distance"] + "<br><br>";
 		str += "However, you could also be:<br>"
 		for (var i=1; i<NUM_OUTPUT; i++) {
-			var alt_who = most_matches[i];
+			var alt_who = most_matches_shuffled[i];
 			str += "<strong>" + alt_who["Rapper"] + "</strong> (compatibility score of "
 				+ alt_who["Matches"] + ") <br>";
 				//+ alt_who["Matches"] + " traits and a rap proximity of " + alt_who["Distance"] + ") <br>";
@@ -22,119 +27,31 @@ function calculatePersonality(user, data) {
 		return str;
 }
 
-//Parse an individual attribute from a list of scores
-function parse(list, attr) {
-	if (typeof list[attr] != "undefined") {
-		//console.log()
-		return list[attr];
-	}
-	else {
-		console.log("No " + attr + " found in list!");
-		return 5;
-	}
-}
+//Knuth shuffle (from https://github.com/coolaj86/knuth-shuffle)
+function shuffle(original_array) {
+  var array = [];
+  for (var i=0; i<original_array.length; i++) {
+  	array[i] = original_array[i];
+  }		
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
 
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
 
-//Find the most matches for a given rapper
-function find_most_matches(rapper1, rapperList) {
-	var matchesList = [];
-	//get number of matches for each rapper
-	for (var i=0; i<rapperList.length; i++) {
-		var rapper2 = rapperList[i];
-		//var matches = num_matches(rapper1, rapper2);
-		var matches = match_score(rapper1, rapper2);
-		if (typeof matches != "undefined") {
-			rapper2["Matches"] = matches;
-		}
-		matchesList.push(rapper2);
-	}
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
 
-	//sort by matches in *descending* order
-	matchesList.sort(function(a, b) {
-		var aMatch = a["Matches"];
-		var bMatch = b["Matches"];
-		if (aMatch < bMatch) {
-			return 1;
-		}
-		else if (aMatch > bMatch) {
-			return -1;
-		}
-		else {
-			return 0;
-		}
-	});
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-	return matchesList;
-}
-
-//Finds number of matches between any two rappers
-function num_matches(rapper1, rapper2) {
-	var n = 0;
-	for (key in rapper1) {
-		if (rapper1[key] == rapper2[key]) { //no e.c. needed?
-			n++;
-		}
-	}
-	return n;
-}
-
-//Finds number of matches, but takes into account multiple checkboxes
-function match_score(rapper1, rapper2) {
-	var score = 0;
-	for (key in rapper1) {
-			score += det_score(key, rapper1[key], rapper2[key]);
-	}
-	return score;
-}
-
-//Determines score for a given param: all inputs are strings
-function det_score(key, value1, value2) {
-	var score = 0;
-	var unit;
-
-	var DECADE = 1/5;
-	var REGION = 1/4;
-	var SOUND = 1/6;
-	var DRINK = 1/5;
-	var DRUG = 1/7;
-
-	//Params with multiple selection
-	if (key == "Decade") {
-		unit = DECADE;
-	}
-	else if (key == "Region") {
-		unit = REGION;
-	}
-	else if (key == "Sound") {
-		unit = SOUND;
-	}
-	else if (key == "DrinkOfChoice") {
-		unit = DRINK;
-	}
-	else if (key == "DrugOfChoice") {
-		unit = DRUG;
-	}
-	else {
-		//Params without multiple selection
-		if (value1[key] == value2[key]) {
-			score = 1;
-			return score;
-		}
-	}
-
-	//console.log("value1: " + value1);
-	//console.log(value1);
-
-	var value1_arr = value1.split(",");
-	var value2_arr = value2.split(",");
-
-	for (var i=0; i<value1_arr.length; i++) {
-		if (value2_arr.indexOf(value1_arr[i]) != -1) {
-			score += unit;
-		}
-	}
-
-	return score;
+  return array;
 }
 
 //Tester

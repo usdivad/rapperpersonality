@@ -35,7 +35,6 @@ function createForm(data, paramList) {
 }
 
 //Submit function
-//1/28 removed: paramList parameter
 function getSubmit(data) {
 	var you = getUser(data);
 	var results = calculatePersonality(you, data);
