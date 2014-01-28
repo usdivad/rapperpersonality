@@ -1,4 +1,5 @@
 //Calculate Manhattan distance using all available params
+//Model: JSON obj (rapper) with keys (key) and values
 function manhattan_distance(rapper1, rapper2, params) {
 	var md = 0;
 	var i = 0;
