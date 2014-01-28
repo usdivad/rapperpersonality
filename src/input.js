@@ -1,5 +1,3 @@
-
-
 //Creates form, fills in attributes
 function createForm(data, paramList) {
 	//generating the form params
@@ -48,7 +46,7 @@ function getUser(data) {
 	var user = {};
 	for (key in example) {
 		if (key != "Rapper") {
-			var inputQuery = "input:radio[name=" + key + "]:checked";
+			var inputQuery = "input[name=" + key + "]:checked";
 			//console.log(inputQuery);
 			var q_value = $(inputQuery).val();
 			if (typeof q_value != "undefined") {
