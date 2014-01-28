@@ -7,4 +7,5 @@ body {
 }
 label {
 	font-weight: normal;
+	padding-left: 4px;
 }
