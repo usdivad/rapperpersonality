@@ -1,4 +1,3 @@
-
 //Find the most matches for a given rapper
 function find_most_matches(rapper1, rapperList) {
 	var matchesList = [];
@@ -32,7 +31,7 @@ function find_most_matches(rapper1, rapperList) {
 }
 
 //Finds number of matches between any two rappers
-function num_matches(rapper1, rapper2) {
+/*function num_matches(rapper1, rapper2) {
 	var n = 0;
 	for (key in rapper1) {
 		if (rapper1[key] == rapper2[key]) { //no e.c. needed?
@@ -40,7 +39,7 @@ function num_matches(rapper1, rapper2) {
 		}
 	}
 	return n;
-}
+}*/
 
 //Finds number of matches, but takes into account multiple checkboxes
 function match_score(rapper1, rapper2) {
