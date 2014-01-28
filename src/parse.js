@@ -7,7 +7,15 @@ function calculatePersonality(user, data) {
 
 		//Sample output; region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
 		var data_filtered = filter_by_region(user, data);
-		var most_matches = find_most_matches(user, data_filtered);
+		console.log(data_filtered);
+		var most_matches;
+		//in case user hasn't picked a region
+		if (data_filtered.length > 0) {
+			most_matches = find_most_matches(user, data_filtered);
+		}
+		else {
+			most_matches = find_most_matches(user, data);
+		}
 		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
 		var who = most_matches[0];
 		//First
