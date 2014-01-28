@@ -57,18 +57,6 @@ function det_score(key, value1, value2) {
 	var score = 0;
 	var multiplier;
 
-	//For one unit -> each
-	//Use avg amt of each
-	
-	/*
-	var DECADE = (1/3) * 8;
-	var REGION = (1/2) * 7;
-	var SOUND = (1/3) * 7;
-	var DRINK = (1/2) * 2;
-	var DRUG = (1/7) * 4;
-	*/
-
-
 	//For one unit -> any
 	//and MULTIPLIERS
 	var DECADE = 3;
@@ -78,15 +66,6 @@ function det_score(key, value1, value2) {
 	var DRUG = 1;
 
 	var from_radio = false;
-	
-
-	/*
-	var DECADE = 1;
-	var REGION = 1;
-	var SOUND = 1;
-	var DRINK = 1;
-	var DRUG = 1;
-	*/
 
 	//Params with multiple selection
 	if (key == "Decade") {
@@ -107,7 +86,7 @@ function det_score(key, value1, value2) {
 		multiplier = DRUG;
 	}
 	else {
-		//Params without multiple selection
+		//Params without multiple selection; unweighted anyways
 		if (value1[key] == value2[key]) {
 			score = 1;
 			return score;
@@ -132,25 +111,10 @@ function det_score(key, value1, value2) {
 				score += value_unit;
 				//console.log("matched " + value1_arr[i]);
 			}
-				
-
-
-			//Add one unit for any match, then return
-			/*
-			score = unit;
-			console.log("For " + key + ", " + value1 + " and " + value2 + " give a score of " + score);
-			return score;
-			*/
 		}
 	}
-	/*if (value2_arr.length > 2) {
-			console.log(value1_arr.length);
 
-		console.log("For " + key + ", [" + value1 + "] and [" + value2 + "] give a score of " + score);
-	}*/
-
-
-	//we matched all of them! extra goodies
+	//We matched all of them for a given rapper! extra goodies
 	if (score == 1) {
 		score = 2;
 	}
