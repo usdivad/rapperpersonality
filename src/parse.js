@@ -6,11 +6,9 @@ function calculatePersonality(user, data) {
 		var NUM_OUTPUT = 10;
 		var str = "<br><br>";
 
-		//Sample output; ordered primarily by #matches and secondarily by proximity
-		//var closest = find_closest(user, data, paramList);
-		//var data_by_decade = sort_decade(user, data)
-		//console.log(data_by_decade);
-		var most_matches = find_most_matches(user, data);
+		//Sample output; ordered by score function. Alternate suggestions are shuffled
+		var data_filtered = filter_by_region(user, data);
+		var most_matches = find_most_matches(user, data_filtered);
 		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
 		var who = most_matches[0];
 		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
@@ -19,12 +17,34 @@ function calculatePersonality(user, data) {
 		str += "However, you could also be:<br>"
 		for (var i=1; i<NUM_OUTPUT; i++) {
 			var alt_who = most_matches_shuffled[i];
-			str += "<strong>" + alt_who["Rapper"] + "</strong> (compatibility score of "
-				+ alt_who["Matches"] + ") <br>";
-				//+ alt_who["Matches"] + " traits and a rap proximity of " + alt_who["Distance"] + ") <br>";
+			if (typeof alt_who == "undefined") { //make sure we haven't run out of rappers
+				i = NUM_OUTPUT;
+			}
+			else {
+				str += "<strong>" + alt_who["Rapper"] + "</strong> (compatibility score of "
+					+ alt_who["Matches"] + ") <br>";
+					//+ alt_who["Matches"] + " traits and a rap proximity of " + alt_who["Distance"] + ") <br>";
+			}
 		}
 
 		return str;
+}
+
+function filter_by_region(user, data) {
+	console.log("filtering");
+	var filtered = [];
+	for (var i=0; i<data.length; i++) {
+		var rapper = data[i];
+		var rapper_regions = rapper["Region"].split(", ");
+		for (var j=0; j<rapper_regions.length; j++) {
+			if (user["Region"] == rapper_regions[j]) {
+				filtered.push(rapper);
+				//console.log("You and " + rapper["Rapper"] + " both are from " + rapper_regions[j] + user["Region"]);
+			}
+		}
+	}
+	console.log(filtered);
+	return filtered;
 }
 
 //Knuth shuffle (from https://github.com/coolaj86/knuth-shuffle)
@@ -78,8 +98,8 @@ function test_parse(data) {
 		//r1 = {"Rapper":"Slim Jim","Drug of choice":"Acid","Drink of choice":"Champagne/Wine","Age/Audio Format":"Cassettes","Fashion":"Upscale","Region":"Dirty South","Criminal History":"Drug dealer","Food/Fitness/Body Type":"tall, fat","Intelligence":"Smart","Pimp Hand":"Pussy whipped","Tattoos":"Facial","Sound":"Pop/underground/alternative"};
 
 		//case 3
-		for (key in rappers[0]) {
-			r1[key] = rappers[0][key];
+		for (key in rappers[20]) {
+			r1[key] = rappers[20][key];
 		}
 		//r1["Sound"] = "Pop";
 		//console.log(r1);

@@ -58,11 +58,14 @@ function det_score(key, value1, value2) {
 
 	//For one unit -> each
 	//Use avg amt of each
+	
+	/*
 	var DECADE = (1/3) * 8;
 	var REGION = (1/2) * 7;
 	var SOUND = (1/3) * 7;
 	var DRINK = (1/2) * 2;
 	var DRUG = (1/7) * 4;
+	*/
 
 
 	//For one unit -> any
@@ -73,6 +76,12 @@ function det_score(key, value1, value2) {
 	var DRINK = 1;
 	var DRUG = 1;
 	*/
+
+	var DECADE = 1;
+	var REGION = 1;
+	var SOUND = 1;
+	var DRINK = 1;
+	var DRUG = 1;
 
 	//Params with multiple selection
 	if (key == "Decade") {
@@ -101,13 +110,19 @@ function det_score(key, value1, value2) {
 	//console.log("value1: " + value1);
 	//console.log(value1);
 
-	var value1_arr = value1.split(",");
-	var value2_arr = value2.split(",");
+	var value1_arr = value1.split(", ");
+	var value2_arr = value2.split(", ");
+	var value_unit = 1/value2_arr.length;
+
+
 
 	for (var i=0; i<value1_arr.length; i++) {
 		if (value2_arr.indexOf(value1_arr[i]) != -1) {
 			//Add one unit for each match
-			score += unit;
+			if (value2_arr.length > 2)
+				console.log("matched " + value1_arr[i] + " in " + value2);
+			score += value_unit;
+			//console.log("matched " + value1_arr[i]);
 			
 			//Add one unit for any match, then return
 			/*
@@ -116,8 +131,16 @@ function det_score(key, value1, value2) {
 			return score;
 			*/
 		}
+		else {
+			if (value2_arr.length > 2)
+				console.log("didn't match " + value1_arr[i] + " in " + value2);
+		}
 	}
-	//console.log("For " + key + ", " + value1 + " and " + value2 + " give a score of " + score);
+	if (value2_arr.length > 2) {
+			console.log(value1_arr.length);
+
+		console.log("For " + key + ", [" + value1 + "] and [" + value2 + "] give a score of " + score);
+	}
 	return score;
 }
 
