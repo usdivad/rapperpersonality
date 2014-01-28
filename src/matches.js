@@ -54,7 +54,7 @@ function match_score(rapper1, rapper2) {
 //Determines score for a given param: all inputs are strings
 function det_score(key, value1, value2) {
 	var score = 0;
-	var unit;
+	var multiplier;
 
 	//For one unit -> each
 	//Use avg amt of each
@@ -69,35 +69,41 @@ function det_score(key, value1, value2) {
 
 
 	//For one unit -> any
-	/*
+	//and MULTIPLIERS
 	var DECADE = 3;
 	var REGION = 2;
 	var SOUND = 4;
 	var DRINK = 1;
 	var DRUG = 1;
-	*/
 
+	var from_radio = false;
+	
+
+	/*
 	var DECADE = 1;
 	var REGION = 1;
 	var SOUND = 1;
 	var DRINK = 1;
 	var DRUG = 1;
+	*/
 
 	//Params with multiple selection
 	if (key == "Decade") {
-		unit = DECADE;
+		multiplier = DECADE;
+		from_radio = true;
 	}
 	else if (key == "Region") {
-		unit = REGION;
+		multiplier = REGION;
+		from_radio = true;
 	}
 	else if (key == "Sound") {
-		unit = SOUND;
+		multiplier = SOUND;
 	}
 	else if (key == "DrinkOfChoice") {
-		unit = DRINK;
+		multiplier = DRINK;
 	}
 	else if (key == "DrugOfChoice") {
-		unit = DRUG;
+		multiplier = DRUG;
 	}
 	else {
 		//Params without multiple selection
@@ -107,23 +113,25 @@ function det_score(key, value1, value2) {
 		}
 	}
 
-	//console.log("value1: " + value1);
-	//console.log(value1);
 
 	var value1_arr = value1.split(", ");
 	var value2_arr = value2.split(", ");
 	var value_unit = 1/value2_arr.length;
 
-
-
 	for (var i=0; i<value1_arr.length; i++) {
 		if (value2_arr.indexOf(value1_arr[i]) != -1) {
-			//Add one unit for each match
-			if (value2_arr.length > 2)
-				console.log("matched " + value1_arr[i] + " in " + value2);
-			score += value_unit;
-			//console.log("matched " + value1_arr[i]);
-			
+			if (from_radio) {
+				score = 1;
+				i = value1_arr.length;
+			}
+			else {
+				//Add one unit for each match from checkbox
+				score += value_unit;
+				//console.log("matched " + value1_arr[i]);
+			}
+				
+
+
 			//Add one unit for any match, then return
 			/*
 			score = unit;
@@ -132,26 +140,28 @@ function det_score(key, value1, value2) {
 			*/
 		}
 		else {
-			if (value2_arr.length > 2)
-				console.log("didn't match " + value1_arr[i] + " in " + value2);
+			//if (value2_arr.length > 2) {
+			//	console.log("didn't match " + value1_arr[i] + " in " + value2);
+			//}
 		}
 	}
-	if (value2_arr.length > 2) {
+	/*if (value2_arr.length > 2) {
 			console.log(value1_arr.length);
 
 		console.log("For " + key + ", [" + value1 + "] and [" + value2 + "] give a score of " + score);
+	}*/
+
+
+	//we matched all of them! extra goodies
+	if (score == 1) {
+		score = 1.25;
 	}
+	score = score * multiplier;
+
 	return score;
 }
 
 
-/*
-function sort_weighted(rapper, rapperList) {
-	var decade_list = ["1970s", "1980s", "1990s", "2000s", "2010s"];
-	var sound_list = ["Classic", "Underground/alternative", "Pop", "Dirty South", "Trap", "Always changing"];
-	var region_list = ["Dirty South", "West Coast", "East Coast", "Mid West"];
-}
-*/
 
 function sort_decade(rapper, rapperList) {
 	var rapper1 = rapper;

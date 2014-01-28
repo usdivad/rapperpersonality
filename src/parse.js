@@ -98,8 +98,8 @@ function test_parse(data) {
 		//r1 = {"Rapper":"Slim Jim","Drug of choice":"Acid","Drink of choice":"Champagne/Wine","Age/Audio Format":"Cassettes","Fashion":"Upscale","Region":"Dirty South","Criminal History":"Drug dealer","Food/Fitness/Body Type":"tall, fat","Intelligence":"Smart","Pimp Hand":"Pussy whipped","Tattoos":"Facial","Sound":"Pop/underground/alternative"};
 
 		//case 3
-		for (key in rappers[20]) {
-			r1[key] = rappers[20][key];
+		for (key in rappers[19]) {
+			r1[key] = rappers[19][key];
 		}
 		//r1["Sound"] = "Pop";
 		//console.log(r1);
@@ -116,6 +116,7 @@ function test_parse(data) {
 
 		//Testing matches
 		var most_matches = find_most_matches(r1, rappers);
+		str += "Your name is " + r1["Rapper"] + "! \n";
 		str += "\n Closest rappers according to most matches are: \n";
 		for (var i=0; i<NUM_OUTPUT; i++) {
 			str += most_matches[i]["Rapper"] + " with " + most_matches[i]["Matches"] + " matches \n";
