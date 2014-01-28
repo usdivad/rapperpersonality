@@ -172,7 +172,7 @@ function match_score(rapper1, rapper2) {
 	return score;
 }
 
-//Determines score for a given param
+//Determines score for a given param: all inputs are strings
 function det_score(key, value1, value2) {
 	var score = 0;
 	var unit;
@@ -207,10 +207,11 @@ function det_score(key, value1, value2) {
 		}
 	}
 
+	//console.log("value1: " + value1);
+	//console.log(value1);
+
 	var value1_arr = value1.split(",");
 	var value2_arr = value2.split(",");
-
-	console.log(value1_arr);
 
 	for (var i=0; i<value1_arr.length; i++) {
 		if (value2_arr.indexOf(value1_arr[i]) != -1) {
@@ -235,16 +236,17 @@ function test_parse(data, paramList) {
 
 		//case 1
 		var r1 = {"Rapper":"Mister Twister","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"Facial","Food_Fitness_BodyType":"short","Intelligence":"Dumb","CriminalHistory":"None","PimpHand":"Legit Pimp","Sound":"Classic","DrinkOfChoice":"Beer","DrugOfChoice":"Weed"};
-		r1 = {"Rapper":"Nelly","Decade":"1990s, 2000s, 2010s","Region":"Mid West","Fashion":"T shirt & Jeans","Tattoos":"a few","Food_Fitness_BodyType":"athletic","Intelligence":"Dumb","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed"};
+		//r1 = {"Rapper":"Nelly","Decade":"1990s, 2000s, 2010s","Region":"Mid West","Fashion":"T shirt & Jeans","Tattoos":"a few","Food_Fitness_BodyType":"athletic","Intelligence":"Dumb","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed"};
+
 		//case 2
 		//r1 = {"Rapper":"Slim Jim","Drug of choice":"Acid","Drink of choice":"Champagne/Wine","Age/Audio Format":"Cassettes","Fashion":"Upscale","Region":"Dirty South","Criminal History":"Drug dealer","Food/Fitness/Body Type":"tall, fat","Intelligence":"Smart","Pimp Hand":"Pussy whipped","Tattoos":"Facial","Sound":"Pop/underground/alternative"};
 
 		//case 3
-		/*for (key in rappers[46]) {
-			r1[key] = rappers[46][key];
+		for (key in rappers[0]) {
+			r1[key] = rappers[0][key];
 		}
-		r1["Sound"] = "Pop";
-		console.log(r1);*/
+		//r1["Sound"] = "Pop";
+		//console.log(r1);
 
 		//Testing Manhattan distance
 		var closest = find_closest(r1, rappers, paramList);

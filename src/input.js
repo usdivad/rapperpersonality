@@ -47,10 +47,19 @@ function getUser(data) {
 	for (key in example) {
 		if (key != "Rapper") {
 			var inputQuery = "input[name=" + key + "]:checked";
-			//console.log(inputQuery);
-			var q_value = $(inputQuery).val();
-			if (typeof q_value != "undefined") {
-				user[key] = q_value;
+			var query_arr = $(inputQuery);
+			var traits = [];
+			var traits_str = "";
+
+			//get traits from query_arr
+			for (var i=0; i<query_arr.length; i++) {
+				traits.push(query_arr[i].value);
+			}
+			//concat into string to pass into calculator
+			traits_str = traits.join(", ");
+
+			if (typeof traits_str != "undefined") {
+				user[key] = traits_str;
 				//console.log(user["key"]);
 			}
 			else {
@@ -58,6 +67,7 @@ function getUser(data) {
 			}
 		}
 	}
-	console.log(user);
+	//console.log("You are: ");
+	//console.log(user);
 	return user;
 }
