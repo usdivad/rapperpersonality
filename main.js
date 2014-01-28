@@ -5,7 +5,7 @@ function main() {
 	//JSON req
 	$.getJSON("./src/rapper_stats.json", function(data) {
 		//rappers = data;
-		$("#inputForm").append(createForm(data, allParams));
+		//$("#inputForm").append(createForm(data, allParams));
 		$("#submitButton").click(function() {
 			var r = getSubmit(data, allParams);
 			$("#results").html(r);

@@ -105,9 +105,9 @@ var pimpList = {
 }
 
 var tattoosList = {
-	"A few": 3.33,
-	"Facial": 6.66,
-	"Many": 10,
+	"a few": 3.33,
+	"facial": 6.66,
+	"many": 10,
 	"none": 0
 }
 

@@ -126,7 +126,8 @@ function find_most_matches(rapper1, rapperList) {
 	//get number of matches for each rapper
 	for (var i=0; i<rapperList.length; i++) {
 		var rapper2 = rapperList[i];
-		var matches = num_matches(rapper1, rapper2);
+		//var matches = num_matches(rapper1, rapper2);
+		var matches = match_score(rapper1, rapper2);
 		if (typeof matches != "undefined") {
 			rapper2["Matches"] = matches;
 		}
@@ -162,6 +163,63 @@ function num_matches(rapper1, rapper2) {
 	return n;
 }
 
+//Finds number of matches, but takes into account multiple checkboxes
+function match_score(rapper1, rapper2) {
+	var score = 0;
+	for (key in rapper1) {
+			score += det_score(key, rapper1[key], rapper2[key]);
+	}
+	return score;
+}
+
+//Determines score for a given param
+function det_score(key, value1, value2) {
+	var score = 0;
+	var unit;
+
+	var DECADE = 1/5;
+	var REGION = 1/4;
+	var SOUND = 1/6;
+	var DRINK = 1/5;
+	var DRUG = 1/7;
+
+	//Params with multiple selection
+	if (key == "Decade") {
+		unit = DECADE;
+	}
+	else if (key == "Region") {
+		unit = REGION;
+	}
+	else if (key == "Sound") {
+		unit = SOUND;
+	}
+	else if (key == "DrinkOfChoice") {
+		unit = DRINK;
+	}
+	else if (key == "DrugOfChoice") {
+		unit = DRUG;
+	}
+	else {
+		//Params without multiple selection
+		if (value1[key] == value2[key]) {
+			score = 1;
+			return score;
+		}
+	}
+
+	var value1_arr = value1.split(",");
+	var value2_arr = value2.split(",");
+
+	console.log(value1_arr);
+
+	for (var i=0; i<value1_arr.length; i++) {
+		if (value2_arr.indexOf(value1_arr[i]) != -1) {
+			score += unit;
+		}
+	}
+
+	return score;
+}
 
 //Tester
 function test_parse(data, paramList) {
@@ -177,7 +235,7 @@ function test_parse(data, paramList) {
 
 		//case 1
 		var r1 = {"Rapper":"Mister Twister","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"Facial","Food_Fitness_BodyType":"short","Intelligence":"Dumb","CriminalHistory":"None","PimpHand":"Legit Pimp","Sound":"Classic","DrinkOfChoice":"Beer","DrugOfChoice":"Weed"};
-
+		r1 = {"Rapper":"Nelly","Decade":"1990s, 2000s, 2010s","Region":"Mid West","Fashion":"T shirt & Jeans","Tattoos":"a few","Food_Fitness_BodyType":"athletic","Intelligence":"Dumb","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed"};
 		//case 2
 		//r1 = {"Rapper":"Slim Jim","Drug of choice":"Acid","Drink of choice":"Champagne/Wine","Age/Audio Format":"Cassettes","Fashion":"Upscale","Region":"Dirty South","Criminal History":"Drug dealer","Food/Fitness/Body Type":"tall, fat","Intelligence":"Smart","Pimp Hand":"Pussy whipped","Tattoos":"Facial","Sound":"Pop/underground/alternative"};
 
