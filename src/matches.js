@@ -52,6 +52,7 @@ function match_score(rapper1, rapper2) {
 }
 
 //Determines score for a given param: all inputs are strings
+//value2 is "other"
 function det_score(key, value1, value2) {
 	var score = 0;
 	var multiplier;
@@ -113,19 +114,21 @@ function det_score(key, value1, value2) {
 		}
 	}
 
-
+	//We scale it by number of values in value2
 	var value1_arr = value1.split(", ");
 	var value2_arr = value2.split(", ");
 	var value_unit = 1/value2_arr.length;
 
+	//For each value in value1 we check whether it's in value2
 	for (var i=0; i<value1_arr.length; i++) {
 		if (value2_arr.indexOf(value1_arr[i]) != -1) {
+			//If from radio we add 1 for the whole score
 			if (from_radio) {
 				score = 1;
 				i = value1_arr.length;
 			}
+			//For checkbox we add one unit for each match
 			else {
-				//Add one unit for each match from checkbox
 				score += value_unit;
 				//console.log("matched " + value1_arr[i]);
 			}
@@ -139,11 +142,6 @@ function det_score(key, value1, value2) {
 			return score;
 			*/
 		}
-		else {
-			//if (value2_arr.length > 2) {
-			//	console.log("didn't match " + value1_arr[i] + " in " + value2);
-			//}
-		}
 	}
 	/*if (value2_arr.length > 2) {
 			console.log(value1_arr.length);
@@ -154,7 +152,7 @@ function det_score(key, value1, value2) {
 
 	//we matched all of them! extra goodies
 	if (score == 1) {
-		score = 1.25;
+		score = 2;
 	}
 	score = score * multiplier;
 
@@ -163,7 +161,7 @@ function det_score(key, value1, value2) {
 
 
 
-function sort_decade(rapper, rapperList) {
+/*function sort_decade(rapper, rapperList) {
 	var rapper1 = rapper;
 	var decade_distances = {
 			"1970s": 0,
@@ -205,4 +203,4 @@ function sort_decade(rapper, rapperList) {
 
 	return distanceList;
 
-}
+}*/
