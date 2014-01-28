@@ -28,10 +28,12 @@ function calculatePersonality(user, data) {
 }
 
 //Knuth shuffle (from https://github.com/coolaj86/knuth-shuffle)
+//modified to return a NEW array **with the original's first element removed!!
+//original_array should be sorted already
 function shuffle(original_array) {
   var array = [];
-  for (var i=0; i<original_array.length; i++) {
-  	array[i] = original_array[i];
+  for (var i=1; i<original_array.length; i++) { //remove first element
+  	array[i-1] = original_array[i];
   }		
   var currentIndex = array.length
     , temporaryValue
