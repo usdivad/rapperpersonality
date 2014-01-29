@@ -49,6 +49,7 @@ function calculatePersonality(user, data) {
 		return str;
 }
 
+//Scales compatibility score out of 100%
 function compatibility_score(score, max) {
 	return ((score/max)*100).toFixed(1);
 }
