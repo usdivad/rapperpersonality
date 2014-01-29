@@ -99,7 +99,6 @@ function main_wp() {
 		var r = getSubmit(data);
 			$("#content").html(r);
 			$("html, body").animate({scrollTop: 0}, "slow");
-
 		});
 
 		//getSubmit(data);

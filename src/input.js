@@ -96,13 +96,24 @@ function get_html(user, data) {
 	if (high_compatibility) { //only if it's a high compatibility
 		str += " You have a compatibility score of " + compatibility + "%";
 	}
+	str += "<img id='first_rapper'>";
 	str += "<br><br>";
 
+
 	//JSON
-	var base_url = "http://zumic.com/?json=get_search_results&search="
-	var query = who["Rapper"];
-	var url_extension = "&post_type=artist-page&page=0";
-	var json_request = base_url + query + url_extension;
+	var base_url = "/"; // so not cross-domain
+	var json_request = {
+		"json": "get_search_results",
+		"search": who["Rapper"],
+		"post_type": "artist-page",
+		"page": 0
+	}
+	$.getJSON(base_url, json_request, function(zumic_data) {
+		console.log(zumic_data);
+		var img_url = zumic_data["posts"][0]["thumbnail_images"]["medium"]["url"];
+		//$("#rapper_banner").attr("src", img_url);
+		$("#first_rapper").attr("src", img_url);
+	});
 
 	//Rest
 	str += "However, you could also be:<br>"
