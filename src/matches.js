@@ -62,11 +62,11 @@ function det_score(key, value1, value2) {
 
 	//For one unit -> any
 	//and MULTIPLIERS
-	var DECADE = 3;
-	var REGION = 2;
-	var SOUND = 4;
-	var DRINK = 1;
-	var DRUG = 1;
+	var DECADE = 3.14;
+	var REGION = 2.24;
+	var SOUND = 4.33;
+	var DRINK = 1.23;
+	var DRUG = 1.23;
 
 	var from_radio = false;
 
