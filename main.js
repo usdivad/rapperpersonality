@@ -1,4 +1,6 @@
-//Maindo
+/*
+ * MAINDO
+ */
 function main() {
 	//var rappers;
 

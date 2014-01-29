@@ -1,3 +1,8 @@
+
+/*
+ *INPUT
+ */
+
 //Creates form, fills in attributes
 //requires: paramList from params.js
 function createForm(data, paramList) {

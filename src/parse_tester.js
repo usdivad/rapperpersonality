@@ -1,4 +1,5 @@
-//Tester
+
+/*TESTER*/
 //1/28: removed paramList parameter
 function test_parse(data) {
 
@@ -46,3 +47,4 @@ function test_parse(data) {
 		//console.log(most_matches);
 		console.log(str);
 }
+

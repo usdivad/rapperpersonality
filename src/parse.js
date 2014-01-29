@@ -1,3 +1,8 @@
+
+/*
+ * PARSE
+ */
+
 //Calculate personality based on MD and matches from rapper database
 //uses matches.js and manhattan
 //1/28 removed: paramList parameter

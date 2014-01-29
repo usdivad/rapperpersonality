@@ -1,3 +1,7 @@
+/*
+ * MATCHES
+ */
+
 //Find the most matches for a given rapper
 function find_most_matches(rapper1, rapperList) {
 	var matchesList = [];
@@ -120,7 +124,13 @@ function det_score(key, value1, value2) {
 	score = score * multiplier;
 
 	return score;
-}//Calculate personality based on MD and matches from rapper database
+}
+
+/*
+ * PARSE
+ */
+
+//Calculate personality based on MD and matches from rapper database
 //uses matches.js and manhattan
 //1/28 removed: paramList parameter
 function calculatePersonality(user, data) {
@@ -207,7 +217,9 @@ function shuffle(original_array) {
   }
 
   return array;
-}//Tester
+}
+
+/*TESTER*/
 //1/28: removed paramList parameter
 function test_parse(data) {
 
@@ -254,7 +266,14 @@ function test_parse(data) {
 		}
 		//console.log(most_matches);
 		console.log(str);
-}//Creates form, fills in attributes
+}
+
+
+/*
+ *INPUT
+ */
+
+//Creates form, fills in attributes
 //requires: paramList from params.js
 function createForm(data, paramList) {
 	//generating the form params
@@ -327,7 +346,10 @@ function getUser(data) {
 	console.log("You are: ");
 	console.log(user);
 	return user;
-}//Maindo
+}
+/*
+ * MAINDO
+ */
 function main() {
 	//var rappers;
 
