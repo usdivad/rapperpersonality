@@ -82,7 +82,7 @@ function get_html(user, data) {
 	var result_arr = calculatePersonality(user, data);
 	var who = result_arr[0];
 	var NUM_OUTPUT = 10;
-	var str = "<br><br>";
+	var str = "<div id='results_div'>";
 
 	//Sample output; region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
 	//Compatibility calculation
@@ -92,11 +92,14 @@ function get_html(user, data) {
 
 
 	//First
-	str += "You are <strong>" + who["Rapper"] + "</strong>!"
+	str += "<div id='you_are'>"
+		+ "You are <b>" + who["Rapper"] + "</b>!";
 	if (high_compatibility) { //only if it's a high compatibility
 		str += " You have a compatibility score of " + compatibility + "%";
 	}
-	str += "<img id='first_rapper'>";
+	str += "</div>";
+
+	str += "<div id='img_div'><img id='first_rapper'></div>";
 	str += "<br><br>";
 
 
@@ -131,6 +134,8 @@ function get_html(user, data) {
 			str += "<br>";
 		}
 	}
+
+	str += "</div>"; //end results_div
 
 	return str;
 }
