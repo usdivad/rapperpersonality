@@ -26,12 +26,17 @@ function calculatePersonality(user, data) {
 		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
 		var who = most_matches[0];
 
-		//Rapper with self
+		//Compatibility calculation
 		var max_score = match_score(who, who);
+		var compatibility = compatibility_score(who["Matches"], max_score);
+		var high_compatibility = (compatibility > 80);
 
 		//First
-		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
-				+ "a compatibility score of " + compatibility_score(who["Matches"], max_score) + "%<br><br>";
+		str += "You are <strong>" + who["Rapper"] + "</strong>!"
+		if (high_compatibility) { //only if it's a high compatibility
+			str += " You have a compatibility score of " + compatibility + "%";
+		}
+		str += "<br><br>";
 		//Rest
 		str += "However, you could also be:<br>"
 		//i=0 for shuffled, i=1 for original
@@ -41,8 +46,11 @@ function calculatePersonality(user, data) {
 				i = NUM_OUTPUT;
 			}
 			else {
-				str += "<strong>" + alt_who["Rapper"] + "</strong> (compatibility score of "
-					+ compatibility_score(alt_who["Matches"], max_score) + "%) <br>";
+				str += "<strong>" + alt_who["Rapper"] + "</strong>";
+				if (high_compatibility) {
+					str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
+				}
+				str += "<br>";
 			}
 		}
 

@@ -97,11 +97,14 @@ function main_wp() {
 
 	$("#submitButton").click(function() {
 		var r = getSubmit(data);
-			$("#results").html(r);
+			$("#content").html(r);
+			$("html, body").animate({scrollTop: 0}, "slow");
+
 		});
+
 		//getSubmit(data);
 		
-	test_parse(data);
+		test_parse(data);
 
 }
 
