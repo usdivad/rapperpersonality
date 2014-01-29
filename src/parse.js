@@ -7,54 +7,27 @@
 //uses matches.js and manhattan
 //1/28 removed: paramList parameter
 function calculatePersonality(user, data) {
-		var NUM_OUTPUT = 10;
-		var str = "<br><br>";
+	
+	//You
+	var data_filtered = filter_by_region(user, data);
+	console.log(data_filtered);
+	var most_matches;
+	var who;
+	//in case user hasn't picked a region
+	if (data_filtered.length > 0) {
+		most_matches = find_most_matches(user, data_filtered);
+	}
+	else {
+		most_matches = find_most_matches(user, data);
+	}
+	who = most_matches.splice(0, 1)[0]; //[0]
+	console.log(most_matches.length);
 
-		//Sample output; region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
+	most_matches = find_most_matches(user, shuffle(most_matches));
+	most_matches.unshift(who);
+	console.log(most_matches.length);
 
-		//You
-		var data_filtered = filter_by_region(user, data);
-		console.log(data_filtered);
-		var most_matches;
-		//in case user hasn't picked a region
-		if (data_filtered.length > 0) {
-			most_matches = find_most_matches(user, data_filtered);
-		}
-		else {
-			most_matches = find_most_matches(user, data);
-		}
-		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
-		var who = most_matches[0];
-
-		//Compatibility calculation
-		var max_score = match_score(who, who);
-		var compatibility = compatibility_score(who["Matches"], max_score);
-		var high_compatibility = (compatibility > 80);
-
-		//First
-		str += "You are <strong>" + who["Rapper"] + "</strong>!"
-		if (high_compatibility) { //only if it's a high compatibility
-			str += " You have a compatibility score of " + compatibility + "%";
-		}
-		str += "<br><br>";
-		//Rest
-		str += "However, you could also be:<br>"
-		//i=0 for shuffled, i=1 for original
-		for (var i=0; i<NUM_OUTPUT; i++) {
-			var alt_who = most_matches_shuffled[i];
-			if (typeof alt_who == "undefined") { //make sure we haven't run out of rappers
-				i = NUM_OUTPUT;
-			}
-			else {
-				str += "<strong>" + alt_who["Rapper"] + "</strong>";
-				if (high_compatibility) {
-					str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
-				}
-				str += "<br>";
-			}
-		}
-
-		return str;
+	return most_matches;
 }
 
 //Scales compatibility score out of 100%
@@ -76,20 +49,21 @@ function filter_by_region(user, data) {
 			}
 		}
 	}
-	console.log(filtered);
+	//console.log(filtered);
 	return filtered;
 }
 
 //Knuth shuffle (from https://github.com/coolaj86/knuth-shuffle)
-//modified to return a NEW array **with the original's first element removed!!
-//original_array should be sorted already
-function shuffle(original_array) {
+//re-modified back to original
+function shuffle(array) {
+  /*
   var array = [];
   for (var i=1; i<original_array.length; i++) { //remove first element
   	array.push(original_array[i]);
   }
-  console.log("pre-shuf");
-  console.log(array);	
+  */
+  //console.log("pre-shuf");
+  //console.log(array);	
   var currentIndex = array.length
     , temporaryValue
     , randomIndex
