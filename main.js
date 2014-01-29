@@ -108,4 +108,4 @@ function main_wp() {
 $(document).ready(function() {
 	main_wp();
 	console.log("ready");
-})
+});
