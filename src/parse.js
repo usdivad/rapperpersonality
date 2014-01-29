@@ -11,6 +11,8 @@ function calculatePersonality(user, data) {
 		var str = "<br><br>";
 
 		//Sample output; region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
+
+		//You
 		var data_filtered = filter_by_region(user, data);
 		console.log(data_filtered);
 		var most_matches;
@@ -23,9 +25,13 @@ function calculatePersonality(user, data) {
 		}
 		var most_matches_shuffled = find_most_matches(user, shuffle(most_matches));
 		var who = most_matches[0];
+
+		//Rapper with self
+		var max_score = match_score(who, who);
+
 		//First
 		str += "You are <strong>" + who["Rapper"] + "</strong>! You have "
-				+ "a compatibility score of " + who["Matches"] + "<br><br>";
+				+ "a compatibility score of " + compatibility_score(who["Matches"], max_score) + "%<br><br>";
 		//Rest
 		str += "However, you could also be:<br>"
 		//i=0 for shuffled, i=1 for original
@@ -36,11 +42,15 @@ function calculatePersonality(user, data) {
 			}
 			else {
 				str += "<strong>" + alt_who["Rapper"] + "</strong> (compatibility score of "
-					+ alt_who["Matches"] + ") <br>";
+					+ compatibility_score(alt_who["Matches"], max_score) + "%) <br>";
 			}
 		}
 
 		return str;
+}
+
+function compatibility_score(score, max) {
+	return ((score/max)*100).toFixed(1);
 }
 
 //Filters out rappers who aren't in user's chosen region (RIVALRIES!)
