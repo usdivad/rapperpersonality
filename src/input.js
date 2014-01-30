@@ -116,6 +116,40 @@ function get_html(user, data) {
 
 	str += "<br><br>";
 
+	//TESTING: json get artists whose pages we do and don't have
+	/*
+	var test_base_url = "/";
+	console.log("ARTISTS WE HAVE: ");
+	var have_artists = 0;
+	var artists_with_pages = function(i, data) {
+		//console.log(i);
+		if (i < data.length) {
+			var artist_request = {
+				"json": "get_search_results",
+				"search": data[i]["Rapper"],
+				"post_type": "artist-page",
+				"page": 0
+			}
+			$.getJSON(test_base_url, artist_request, function(artist_data) {
+				var post = artist_data["posts"][0];
+				if (typeof post != "undefined") {
+					//console.log(artist_request["search"] + "\n");
+					//have_artists++;
+				}
+				else {
+					console.log(artist_request["search"] + "\n");
+					have_artists++;
+				}
+				artists_with_pages(i+1, data);
+			});
+		}
+		else {
+			console.log("We're missing " + have_artists + " out of " + i + " artist pages");
+		}
+	};
+
+	artists_with_pages(0, data);
+	*/
 
 	//JSON req; fill in the links and images
 	var base_url = "/"; // so not cross-domain
@@ -125,22 +159,19 @@ function get_html(user, data) {
 		"post_type": "artist-page",
 		"page": 0
 	}
+
 	$.getJSON(base_url, json_request, function(zumic_data) { //error-check the ind reqs
 		console.log(zumic_data);
 		var post = zumic_data["posts"][0];
-		var artist_page_url = post["url"];
-		var img_url = post["thumbnail_images"]["medium"]["url"];
+		var artist_page_url = "http://zumic.com/post-type/artist-page";
+		var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/cache/2014/01/Mos_def-03-mika_edited-534x0.jpg";
+		if (typeof post != "undefined") {
+			artist_page_url = post["url"];
+			img_url = post["thumbnail_images"]["medium"]["url"];
+		}
 
 
 		//fb button
-		//fb old
-		/*
-		fb_url = "http://www.facebook.com/sharer.php?s=100&";
-		fb_url += "&p[url]=http://zumic.com/rapper-personality-quiz/"
-				+ "&p[images][0]=" + img_url
-				+ "&p[title]=My closest rapper personality on Zumic is " + who["Rapper"] + "!"
-				+ "&p[summary]=Which rapper are you? Take the quiz to find out!";
-		*/
 		
 		//fb new
 		var fb_share = function() {
