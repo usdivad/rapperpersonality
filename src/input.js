@@ -164,7 +164,7 @@ function get_html(user, data) {
 		console.log(zumic_data);
 		var post = zumic_data["posts"][0];
 		var artist_page_url = "http://zumic.com/post-type/artist-page";
-		var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/cache/2014/01/Mos_def-03-mika_edited-534x0.jpg";
+		var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/jayz_small.png";
 		if (typeof post != "undefined") {
 			artist_page_url = post["url"];
 			img_url = post["thumbnail_images"]["medium"]["url"];
