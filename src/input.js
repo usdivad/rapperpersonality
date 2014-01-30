@@ -93,7 +93,7 @@ function get_html(user, data) {
 
 	//First rapper: who are you?
 	str += "<div id='you_are'>"
-		+ "Your closest rapper personality is <b>" + who["Rapper"] + "</b>!";
+		+ "Your rapper personality is <b>" + who["Rapper"] + "</b>!";
 	if (high_compatibility) { //only if it's a high compatibility
 		str += " You are " + compatibility + "% compatible.";
 	}
@@ -107,9 +107,15 @@ function get_html(user, data) {
 	str += "<br>"
 
 	//Facebook
-	//str += '<div id="fb_share_result" class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button"></div>';
-	str += "<a id='fb_share_result'>Share on Facebook</a>";
-	str += "<br><br>"
+	//str += '<div id="fb_share_result" class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-width="700px" data-height="200px" width="500px" height="100px" data-type="button"></div>';
+	//str += '<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-width="500px" data-type="button"></div>'
+	str += "<a id='fb_share_result' href='#'><img src='http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/fb_share.png'></a>";
+
+	//Twitter
+	str += '<a href="https://twitter.com/share" id="twitter_share_result" class="twitter-share-button" data-url="http://zumic.com/rapper-personality-quiz" data-text="Rapper Personality Quiz!" data-via="zumic"><img src="http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/twitter_share.png"></a>';
+
+	str += "<br><br>";
+
 
 	//JSON req; fill in the links and images
 	var base_url = "/"; // so not cross-domain
@@ -127,14 +133,16 @@ function get_html(user, data) {
 
 
 		//fb button
-		//old
+		//fb old
+		/*
 		fb_url = "http://www.facebook.com/sharer.php?s=100&";
 		fb_url += "&p[url]=http://zumic.com/rapper-personality-quiz/"
 				+ "&p[images][0]=" + img_url
 				+ "&p[title]=My closest rapper personality on Zumic is " + who["Rapper"] + "!"
 				+ "&p[summary]=Which rapper are you? Take the quiz to find out!";
+		*/
 		
-		//new
+		//fb new
 		var fb_share = function() {
 			FB.ui({
 				method: "feed",
@@ -149,24 +157,28 @@ function get_html(user, data) {
 			});
 		};
 
-		var fb_share_simple = function() {
-			FB.ui(
-				 {
-				  method: 'feed'
-				 }
-			);
-		};
+		var twitter_text = "My rapper personality is " + who["Rapper"] + ": take the quiz on Zumic to find out yours!";
 		
+		var twitter_url = "https://twitter.com/intent/tweet?original_referer=http://zumic.com/rapper-personality-quiz/"
+						+ "&text=" + twitter_text
+						+ "&url=http://zumic.com/rapper-personality-quiz"
+						+ "&via=zumic";
 
-		//set attributes of html elems
+		//!!set attributes of html elems
 		$("#first_rapper_link").attr("href", artist_page_url);
 		$("#first_rapper_image").attr("src", img_url);
+
+		//fb old
 		//$("#fb_share_result").attr("href", fb_url);
 		
-		//new
+		//fb new
 		$("#fb_share_result").click(function() {
 			fb_share();
-		})
+		});
+
+		//twitter
+		//$("#twitter_share_result").attr("data-text", twitter_text);
+		$("#twitter_share_result").attr("href", twitter_url);
 
 	});
 
