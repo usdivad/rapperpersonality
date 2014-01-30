@@ -8,7 +8,7 @@
 //1/28 removed: paramList parameter
 function calculatePersonality(user, data) {
 	
-	//You
+	//You: region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
 	var data_filtered = filter_by_region(user, data);
 	console.log(data_filtered);
 	var most_matches;

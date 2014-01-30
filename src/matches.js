@@ -59,14 +59,23 @@ function match_score(rapper1, rapper2) {
 function det_score(key, value1, value2) {
 	var score = 0;
 	var multiplier;
-
+	
 	//For one unit -> any
 	//and MULTIPLIERS
+	/*
 	var DECADE = 3.14;
 	var REGION = 2.24;
 	var SOUND = 4.33;
 	var DRINK = 1.23;
 	var DRUG = 1.23;
+	*/
+
+	//equal multipliers
+	var DECADE = 1;
+	var REGION = 1;
+	var SOUND = 1;
+	var DRINK = 1;
+	var DRUG = 1;
 
 	var from_radio = false;
 
