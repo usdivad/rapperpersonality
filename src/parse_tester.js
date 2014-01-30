@@ -38,6 +38,7 @@ function test_parse(data) {
 		*/
 
 		//Testing matches
+		console.log("testing matches:");
 		var most_matches = find_most_matches(r1, rappers);
 		str += "Your name is " + r1["Rapper"] + "! \n";
 		str += "\n Closest rappers according to most matches are: \n";
