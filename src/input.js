@@ -135,14 +135,14 @@ function get_html(user, data) {
 				+ "&p[summary]=Which rapper are you? Take the quiz to find out!";
 		
 		//new
-		/*var fb_share = function() {
+		var fb_share = function() {
 			FB.ui({
 				method: "feed",
 				name: "My rapper personality is " + who["Rapper"] + "!",
 				link: "http://zumic.com/rapper-personality-quiz/",
 				picture: img_url,
-				caption: "GOAT",
-				description: "Which rapper are you? Take the quiz on Zumic to find out!"
+				description: "Which rapper are you? Take the quiz on Zumic to find out!",
+				app_id: 1375271719406903
 			}, function(response) {
 				if (response && response.post_id) {}
 				else{}
@@ -156,17 +156,17 @@ function get_html(user, data) {
 				 }
 			);
 		};
-		*/
+		
 
 		//set attributes of html elems
 		$("#first_rapper_link").attr("href", artist_page_url);
 		$("#first_rapper_image").attr("src", img_url);
-		$("#fb_share_result").attr("href", fb_url);
+		//$("#fb_share_result").attr("href", fb_url);
 		
 		//new
-		/*$("#fb_share_result").click(function() {
+		$("#fb_share_result").click(function() {
 			fb_share();
-		})*/
+		})
 
 	});
 

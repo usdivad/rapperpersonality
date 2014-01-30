@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<div id="fb-root"></div>
 <div id="main-content">
   <div id="left-column">
     <article class="post">
@@ -21,3 +22,43 @@
   </div>
 </div>
 <?php get_footer(); ?>
+
+<style>
+  label {
+    font-weight: normal;
+    margin-left: 4px;
+    margin-bottom: 4px;
+  }
+
+  label:hover {
+    background-color: #EBEBEB;
+  }
+
+  input:checked {
+    background-color: red;
+  }
+</style>
+
+<script>
+//fb
+  window.fbAsyncInit = function() {
+          FB.init({
+            appId      : 1375271719406903,
+            status     : true,
+            xfbml      : true
+          });
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+
+</script>
+
+<script type="text/javascript">
+//put all.js here, paste into wordpress, Cmd+Z
+</script>
