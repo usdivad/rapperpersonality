@@ -167,7 +167,12 @@ function get_html(user, data) {
 		var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/jayz_small.png";
 		if (typeof post != "undefined") {
 			artist_page_url = post["url"];
-			img_url = post["thumbnail_images"]["medium"]["url"];
+			try {
+				img_url = post["thumbnail_images"]["medium"]["url"];
+			}
+			catch(e) {
+				console.log("No image found, buddy");
+			}
 		}
 
 
@@ -214,6 +219,7 @@ function get_html(user, data) {
 	});
 
 	//Alternate rappers
+	var alternate_rappers = [];
 	str += "You could also be:<br>"
 	//i=0 for shuffled array, i=1 for original array
 	for (var i=1; i<NUM_OUTPUT; i++) {
@@ -222,7 +228,10 @@ function get_html(user, data) {
 			i = NUM_OUTPUT;
 		}
 		else {
-			str += "<strong>" + alt_who["Rapper"] + "</strong>";
+			var name = alt_who["Rapper"];
+			var id = "alt_rapper_" + i;
+			alternate_rappers.push({"name": name, "id": id});
+			str += "<a id='" + id + "' href='http://zumic.com/post-type/artist-page'>" + name + "</a>";
 			/*if (high_compatibility) {
 				str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
 			}*/
@@ -239,6 +248,33 @@ function get_html(user, data) {
 	}
 
 	str += "</div>"; //end results_div
+
+	//Getting links for alternate "you could be"s
+	var alt_artists = function(i, artists) {
+		//console.log(i);
+		if (i < artists.length) {
+			var artist_request = {
+				"json": "get_search_results",
+				"search": artists[i]["name"],
+				"post_type": "artist-page",
+				"page": 0
+			}
+			$.getJSON(base_url, artist_request, function(artist_data) {
+				var post = artist_data["posts"][0];
+				if (typeof post != "undefined") {
+					//console.log("found ");
+					var artist_page_url = post["url"];
+					var link_query = "#" + artists[i]["id"];
+					$(link_query).attr("href", artist_page_url);
+				}
+			});
+			alt_artists(i+1, artists); //recursively do json reqs
+		}
+		else {
+		}
+	};
+	alt_artists(0, alternate_rappers);
+
 
 	return str;
 }
