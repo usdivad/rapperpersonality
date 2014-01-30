@@ -94,15 +94,15 @@ function get_html(user, data) {
 	//First rapper: who are you?
 	str += "<div id='you_are'>"
 		+ "Your rapper personality is <b>" + who["Rapper"] + "</b>!";
-	if (high_compatibility) { //only if it's a high compatibility
+	/*if (high_compatibility) { //only if it's a high compatibility
 		str += " You are " + compatibility + "% compatible.";
-	}
+	}*/
 	str += "<div id='img_div'><img id='first_rapper_image'></div>";
 	str += "<br>For " + who["Rapper"] + "'s latest music, news and tour dates, check out their <a id='first_rapper_link'>Zumic artist page</a>."
 	str += "</div>"; //end you_are
 
 	//Share: [facebook, twitter, google+, tumblr links]
-	str += "<br><br>";
+	str += "<br>";
 	str += "Share your results:";
 	str += "<br>"
 
@@ -183,7 +183,7 @@ function get_html(user, data) {
 	});
 
 	//Alternate rappers
-	str += "However, you could also be:<br>"
+	str += "You could also be:<br>"
 	//i=0 for shuffled array, i=1 for original array
 	for (var i=1; i<NUM_OUTPUT; i++) {
 		var alt_who = result_arr[i];
@@ -192,10 +192,18 @@ function get_html(user, data) {
 		}
 		else {
 			str += "<strong>" + alt_who["Rapper"] + "</strong>";
-			if (high_compatibility) {
+			/*if (high_compatibility) {
 				str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
+			}*/
+			if (i == NUM_OUTPUT-1) {
+				str += ".";
 			}
-			str += "<br>";
+			else if (i == NUM_OUTPUT-2) {
+				str += ", or "
+			}
+			else {
+				str += ", ";
+			}
 		}
 	}
 

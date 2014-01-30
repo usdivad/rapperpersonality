@@ -5,7 +5,7 @@
 
 //Calculate personality based on MD and matches from rapper database
 //uses matches.js and manhattan
-//1/28 removed: paramList parameter
+//1/30: the whole thing gets shuffled!
 function calculatePersonality(user, data) {
 	
 	//You: region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
@@ -15,17 +15,21 @@ function calculatePersonality(user, data) {
 	var who;
 	//in case user hasn't picked a region
 	if (data_filtered.length > 0) {
-		most_matches = find_most_matches(user, data_filtered);
+		most_matches = find_most_matches(user, shuffle(data_filtered)); //shuffled
 	}
 	else {
-		most_matches = find_most_matches(user, data);
+		most_matches = find_most_matches(user, shuffle(data)); //shuffled!
 	}
+	
+	//Shuffling the rest
+	/*
 	who = most_matches.splice(0, 1)[0]; //[0]
 	console.log(most_matches.length);
 
 	most_matches = find_most_matches(user, shuffle(most_matches));
 	most_matches.unshift(who);
 	console.log(most_matches.length);
+	*/
 
 	return most_matches;
 }
