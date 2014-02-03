@@ -15,21 +15,21 @@ function calculatePersonality(user, data) {
 	var who;
 	//in case user hasn't picked a region
 	if (data_filtered.length > 0) {
-		most_matches = find_most_matches(user, shuffle(data_filtered)); //shuffled
+		most_matches = find_most_matches(user, data_filtered); //unshuffled
 	}
 	else {
-		most_matches = find_most_matches(user, shuffle(data)); //shuffled!
+		most_matches = find_most_matches(user, data); //unshuffled!
 	}
 	
 	//Shuffling the rest
-	/*
+	
 	who = most_matches.splice(0, 1)[0]; //[0]
 	console.log(most_matches.length);
 
 	most_matches = find_most_matches(user, shuffle(most_matches));
 	most_matches.unshift(who);
 	console.log(most_matches.length);
-	*/
+	
 
 	return most_matches;
 }

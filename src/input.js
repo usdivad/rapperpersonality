@@ -89,10 +89,11 @@ function get_html(user, data) {
 
 	//Sample output; 
 	//Compatibility calculation
+	/*
 	var max_score = match_score(who, who);
 	var compatibility = compatibility_score(who["Matches"], max_score);
 	var high_compatibility = (compatibility > 80);
-
+	*/
 
 	//First rapper: who are you?
 	str += "<div id='you_are'>"

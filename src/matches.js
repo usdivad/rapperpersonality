@@ -49,14 +49,14 @@ function find_most_matches(rapper1, rapperList) {
 function match_score(rapper1, rapper2) {
 	var score = 0;
 	for (key in rapper1) {
-			//console.log(key + " " + rapper1["Rapper"] + " " + rapper2["Rapper"]);
+			console.log(key + " " + rapper1["Rapper"] + " " + rapper2["Rapper"] + ":");
 			score += det_score(key, rapper1[key], rapper2[key]);
 	}
 	return score;
 }
 
 //Determines score for a given param: all inputs are strings
-//value2 is "other"
+//value2 is value for "other"
 function det_score(key, value1, value2) {
 	var score = 0;
 	var multiplier;
@@ -100,10 +100,11 @@ function det_score(key, value1, value2) {
 	}
 	else {
 		//Params without multiple selection; unweighted anyways
-		if (value1[key] == value2[key]) {
+		if (value1 == value2) {
 			score = 1;
-			return score;
+			//console.log(value1 + " == " + value2);
 		}
+		return score;
 	}
 
 	//We scale it by number of values in value2
@@ -127,6 +128,7 @@ function det_score(key, value1, value2) {
 				score += value_unit;
 				//console.log("matched " + value1_arr[i]);
 			}
+			//console.log(value1_arr[i] + " == " + value2_arr[i]);
 		}
 	}
 
