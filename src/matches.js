@@ -49,7 +49,7 @@ function find_most_matches(rapper1, rapperList) {
 function match_score(rapper1, rapper2) {
 	var score = 0;
 	for (key in rapper1) {
-			console.log(key + " " + rapper1["Rapper"] + " " + rapper2["Rapper"] + ":");
+			//console.log(key + " " + rapper1["Rapper"] + " " + rapper2["Rapper"] + ":");
 			score += det_score(key, rapper1[key], rapper2[key]);
 	}
 	return score;
@@ -83,7 +83,6 @@ function det_score(key, value1, value2) {
 	//Params with multiple selection
 	if (key == "Decade") {
 		multiplier = DECADE;
-		from_radio = true;
 	}
 	else if (key == "Region") {
 		multiplier = REGION;
@@ -101,7 +100,7 @@ function det_score(key, value1, value2) {
 	else {
 		//Params without multiple selection; unweighted anyways
 		//toUpperCase provides case-insensitive matching
-		if (value1.toUpperCase() == value2.toUpperCase()) {
+		if (value1 == value2) {
 			score = 1;
 			//console.log(value1 + " == " + value2);
 		}
@@ -110,8 +109,8 @@ function det_score(key, value1, value2) {
 
 	//We scale it by number of values in value2
 	//toUpperCase provides case-insensitive matching
-	var value1_arr = value1.toUpperCase().split(", ");
-	var value2_arr = value2.toUpperCase().split(", ");
+	var value1_arr = value1.split(", ");
+	var value2_arr = value2.split(", ");
 	var value_unit = 1/value2_arr.length;
 
 	//For each value in value1 we check whether it's in value2
