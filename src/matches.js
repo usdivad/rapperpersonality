@@ -100,7 +100,8 @@ function det_score(key, value1, value2) {
 	}
 	else {
 		//Params without multiple selection; unweighted anyways
-		if (value1 == value2) {
+		//toUpperCase provides case-insensitive matching
+		if (value1.toUpperCase() == value2.toUpperCase()) {
 			score = 1;
 			//console.log(value1 + " == " + value2);
 		}
@@ -108,11 +109,9 @@ function det_score(key, value1, value2) {
 	}
 
 	//We scale it by number of values in value2
-	/*if (typeof value2 == "undefined") {
-		console.log("UNDEFINED: " + value1 + value2 + key);
-	}*/
-	var value1_arr = value1.split(", ");
-	var value2_arr = value2.split(", ");
+	//toUpperCase provides case-insensitive matching
+	var value1_arr = value1.toUpperCase().split(", ");
+	var value2_arr = value2.toUpperCase().split(", ");
 	var value_unit = 1/value2_arr.length;
 
 	//For each value in value1 we check whether it's in value2
