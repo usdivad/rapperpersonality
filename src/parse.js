@@ -10,6 +10,7 @@ function calculatePersonality(user, data) {
 	
 	//You: region-filtered then ordered by score function. Only alternate suggestions (non-first) are shuffled
 	var data_filtered = filter_by_region(user, data);
+	console.log("Filtered data: ");
 	console.log(data_filtered);
 	var most_matches;
 	var who;
@@ -30,7 +31,8 @@ function calculatePersonality(user, data) {
 	most_matches.unshift(who);
 	console.log(most_matches.length);
 	
-
+	console.log("Final matches: ");
+	console.log(most_matches);
 	return most_matches;
 }
 

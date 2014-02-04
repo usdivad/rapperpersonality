@@ -111,7 +111,7 @@ function get_html(user, data) {
 		str += " You are " + compatibility + "% compatible.";
 	}*/
 	str += "<div id='img_div'><img id='first_rapper_image'></div>";
-	str += "<br>For " + who["Rapper"] + "'s latest music, news and tour dates, check out their <a id='first_rapper_link'>Zumic artist page</a>."
+	str += "<br>Check out " + who["Rapper"] + "'s <a id='first_rapper_link'>Zumic artist page</a> for music, news, and tour dates."
 	str += "</div>"; //end you_are
 
 	//Share: [facebook, twitter, google+, tumblr links]
