@@ -114,6 +114,39 @@ function get_html(user, data) {
 	str += "<br>Check out " + who["Rapper"] + "'s <a id='first_rapper_link'>Zumic artist page</a> for music, news, and tour dates."
 	str += "</div>"; //end you_are
 
+
+	//Alternate rappers
+	var alternate_rappers = [];
+	str += "<br>You could also be:<br>"
+	//i=0 for shuffled array, i=1 for original array
+	for (var i=1; i<NUM_OUTPUT; i++) {
+		var alt_who = result_arr[i];
+		if (typeof alt_who == "undefined") { //make sure we haven't run out of rappers
+			i = NUM_OUTPUT;
+		}
+		else {
+			var name = alt_who["Rapper"];
+			var id = "alt_rapper_" + i;
+			alternate_rappers.push({"name": name, "id": id});
+			str += "<a id='" + id + "' href='http://zumic.com/post-type/artist-page'>" + name + "</a>";
+			/*if (high_compatibility) {
+				str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
+			}*/
+			if (i == NUM_OUTPUT-1) {
+				str += ".";
+			}
+			else if (i == NUM_OUTPUT-2) {
+				str += ", or "
+			}
+			else {
+				str += ", ";
+			}
+		}
+	}
+
+	str += "</div>"; //end results_div
+
+
 	//Share: [facebook, twitter, google+, tumblr links]
 	str += "<br>";
 	str += "Share your results:";
@@ -236,38 +269,8 @@ function get_html(user, data) {
 
 	});
 
-	//Alternate rappers
-	var alternate_rappers = [];
-	str += "You could also be:<br>"
-	//i=0 for shuffled array, i=1 for original array
-	for (var i=1; i<NUM_OUTPUT; i++) {
-		var alt_who = result_arr[i];
-		if (typeof alt_who == "undefined") { //make sure we haven't run out of rappers
-			i = NUM_OUTPUT;
-		}
-		else {
-			var name = alt_who["Rapper"];
-			var id = "alt_rapper_" + i;
-			alternate_rappers.push({"name": name, "id": id});
-			str += "<a id='" + id + "' href='http://zumic.com/post-type/artist-page'>" + name + "</a>";
-			/*if (high_compatibility) {
-				str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
-			}*/
-			if (i == NUM_OUTPUT-1) {
-				str += ".";
-			}
-			else if (i == NUM_OUTPUT-2) {
-				str += ", or "
-			}
-			else {
-				str += ", ";
-			}
-		}
-	}
-
-	str += "</div>"; //end results_div
-
 	//Getting links for alternate "you could be"s
+	//has to be after base_url defined
 	var alt_artists = function(i, artists) {
 		//console.log(i);
 		if (i < artists.length) {
@@ -280,10 +283,13 @@ function get_html(user, data) {
 			$.getJSON(base_url, artist_request, function(artist_data) {
 				var post = artist_data["posts"][0];
 				if (typeof post != "undefined") {
-					//console.log("found ");
+					console.log("found ");
 					var artist_page_url = post["url"];
 					var link_query = "#" + artists[i]["id"];
 					$(link_query).attr("href", artist_page_url);
+				}
+				else {
+					console.log("not found");
 				}
 			});
 			alt_artists(i+1, artists); //recursively do json reqs
