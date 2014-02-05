@@ -82,7 +82,7 @@ function get_html(user, data) {
 	var url_self = "http://zumic.com/rapper-personality-quiz/";
 	var result_arr = calculatePersonality(user, data);
 	var who = result_arr[0];
-	var NUM_OUTPUT = 10;
+	var NUM_OUTPUT = 6;
 	var custom_text = who["ResultText"];
 
 	var str = "<div id='results_div'>";
@@ -201,7 +201,8 @@ function get_html(user, data) {
 				link: url_self,
 				picture: img_url,
 				description: social_desc + " Take the quiz on Zumic to find out!",
-				app_id: 1375271719406903
+				app_id: 1375271719406903,
+				appId: 1375271719406903
 			}, function(response) {
 				if (response && response.post_id) {}
 				else{}
