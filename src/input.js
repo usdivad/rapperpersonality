@@ -145,11 +145,11 @@ function get_html(user, data) {
 			}
 			$.getJSON(test_base_url, artist_request, function(artist_data) {
 				var post = artist_data["posts"][0];
-				if (typeof post != "undefined") {
+				if (typeof post != "undefined") { //we have
 					//console.log(artist_request["search"] + "\n");
 					//have_artists++;
 				}
-				else {
+				else { //we don't have
 					console.log(artist_request["search"] + "\n");
 					have_artists++;
 				}
