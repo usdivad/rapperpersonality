@@ -1,0 +1,27 @@
+<html>
+<body>
+<div id="in">Click me</div>
+<script src="lib/jquery-1.10.2.min.js"></script>
+<script>
+	$("#in").click(function() {
+		console.log("clicked");
+		/*$.ajax({
+			type: "POST",
+			url: "./collect.php",
+			data: Math.floor(Math.random())*100,
+			success: function(result) {
+				console.log(result);
+				return 1;
+			},
+			error: function(error) {
+				console.log(error);
+				return 0;
+			}
+		});*/
+		$.post("collect.php", {data: Math.floor(Math.random()*100)}, function(data) {
+			console.log("woo");
+		});
+	});
+</script>
+</body>
+</html>
