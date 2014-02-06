@@ -299,8 +299,24 @@ function get_html(user, data) {
 	};
 	alt_artists(0, alternate_rappers);
 
+	//Data collection
+	var post_data = who["Rapper"] + " from " + to_s(user);
+	/*$.post("collect.php", {data: post_data, function(d) {
+		console.log(post_data);
+		console.log(d);
+	});*/
+
 
 	return str;
+} //end get_html
+
+function to_s(user) {
+	s = "{";
+	for (key in user) {
+		s+= key + ": " + user[key] + ",";
+	}
+	s = s.slice(0, -1); //remove the last comma
+	return s + "}";
 }
 
 //From 2nd person to 1st person!
