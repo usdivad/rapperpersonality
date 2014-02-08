@@ -1,0 +1,59 @@
+<html>
+<body>
+	<div id="results"></div>
+<script src="lib/jquery-1.10.2.min.js"></script>
+<script>
+
+	function tally() {
+		var rappers = ["Snoop Dogg","The Notorious B.I.G.","Kendrick Lamar","MC Hammer","Andre 3000","Danny Brown","Insane Clown Posse","Drake","Jay-Z","Kanye West","Eminem","Beastie Boys","2 Pac","Lil Wayne","Afrika Bambaataa","Action Bronson","Vanilla Ice","Riff Raff","Mac Miller","J. Cole","Chance The Rapper","Macklemore","Nas","Dr. Dre","Rick Ross","50 Cent","Redman","Tyler","Schoolboy Q","Wale","Pusha T","2 Chainz","Q-Tip","Busta Rhymes","Dmx","Ol' Dirty Bastard","Black Thought","Mos Def","Talib Kweli","Madlib","Wiz Khalifa","A$AP Rocky","A$AP Ferg","Childish Gambino","Bone Thugs N Harmony","Nicki Minaj","Deltron 3030","Run-D.M.C.","MF Doom","Chuck  D","Joey Bada$$","Lauryn Hill","Future","Method Man","Ghostface Killah","French Montana","Gucci Mane","Nelly","T- Pain","Ludacris","Big K.R.I.T.","Missy Elliot","Paul Wall","Slick Rick","Chief Keef","Fat Joe","P Diddy","Ja Rule","LL Cool J","Lil' Kim"];
+		
+		$.get("collected_data.txt", function(data) {
+			var tally_arr = {};
+			var lines = data.split("\n");
+			var total = 0;
+			var out = "";
+			//console.log(lines);
+
+			for (var i in lines) {
+				var line = lines[i];
+				var name_arr = line.match(/^(.+?(?= from))/);
+				var name = "";
+				if (name_arr != null) { //use null, not undefined check
+					//console.log(line);
+					//console.log(name_arr[0]);
+					name = name_arr[0];
+					if (typeof tally_arr[name] == "undefined") {
+						tally_arr[name] = 1;
+					}
+					else {
+						tally_arr[name]++;
+					}
+					total++;
+				}
+			}
+			out += "Total results: " + total + "<br><br>";
+			out += to_s(tally_arr);
+			$("#results").html(out);
+			//console.log(tally_arr);
+		});
+	}
+
+	function to_s(t) {
+		s = "";
+		for (key in t) {
+			s += key + ": " + t[key] + "<br>";
+		}
+		return s;
+	}
+
+
+	$(window).load(function() {
+		tally();
+	});
+
+
+
+
+</script>
+</body>
+</html>
