@@ -1,7 +1,7 @@
 #Makeshift Makefile
 
 cd src
-cat matches.js parse.js parse_tester.js input.js ../main.js > all.js
+cat matches.js parse.js parse_tester.js input.js main.js > all.js
 
 cd ..
 echo '<!--Updated' `date +%Y`'/'`date +%m`'/'`date +%d`' '`date +%H`':'`date +%M` 'by David Su-->' > page-rapper-personality-quiz.php
