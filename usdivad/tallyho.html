@@ -3,16 +3,17 @@
 	<div id="results"></div>
 <script src="lib/jquery-1.10.2.min.js"></script>
 <script>
-
+	//Tally ho!
 	function tally() {
 		var rappers = ["Snoop Dogg","The Notorious B.I.G.","Kendrick Lamar","MC Hammer","Andre 3000","Danny Brown","Insane Clown Posse","Drake","Jay-Z","Kanye West","Eminem","Beastie Boys","2 Pac","Lil Wayne","Afrika Bambaataa","Action Bronson","Vanilla Ice","Riff Raff","Mac Miller","J. Cole","Chance The Rapper","Macklemore","Nas","Dr. Dre","Rick Ross","50 Cent","Redman","Tyler","Schoolboy Q","Wale","Pusha T","2 Chainz","Q-Tip","Busta Rhymes","Dmx","Ol' Dirty Bastard","Black Thought","Mos Def","Talib Kweli","Madlib","Wiz Khalifa","A$AP Rocky","A$AP Ferg","Childish Gambino","Bone Thugs N Harmony","Nicki Minaj","Deltron 3030","Run-D.M.C.","MF Doom","Chuck  D","Joey Bada$$","Lauryn Hill","Future","Method Man","Ghostface Killah","French Montana","Gucci Mane","Nelly","T- Pain","Ludacris","Big K.R.I.T.","Missy Elliot","Paul Wall","Slick Rick","Chief Keef","Fat Joe","P Diddy","Ja Rule","LL Cool J","Lil' Kim"];
 		
+		//Get the logged data
 		$.get("collected_data.txt", function(data) {
-			var tally_arr = {};
+			var tally_obj = {};
+			var tally_arr = [];
 			var lines = data.split("\n");
 			var total = 0;
 			var out = "";
-			//console.log(lines);
 
 			for (var i in lines) {
 				var line = lines[i];
@@ -22,26 +23,53 @@
 					//console.log(line);
 					//console.log(name_arr[0]);
 					name = name_arr[0];
-					if (typeof tally_arr[name] == "undefined") {
-						tally_arr[name] = 1;
+					if (typeof tally_obj[name] == "undefined") {
+						tally_obj[name] = 1;
 					}
 					else {
-						tally_arr[name]++;
+						tally_obj[name]++;
 					}
 					total++;
 				}
 			}
+
+			//sort
+			for (key in tally_obj) {
+				obj = {};
+				obj["name"] = key;
+				obj["count"] = tally_obj[key];
+				//console.log(obj);
+				tally_arr.push(obj);
+			}
+			tally_arr.sort(function(x, y) {
+				var xc = x["count"];
+				var yc = y["count"];
+				if (xc < yc) { //descending
+					return 1;
+				}
+				else if (xc == yc) {
+					return 0;
+				}
+				else {
+					return -1;
+				}
+			});
+
 			out += "Total results: " + total + "<br><br>";
-			out += to_s(tally_arr);
+			out += to_s(tally_arr, total);
 			$("#results").html(out);
-			//console.log(tally_arr);
+			//console.log(tally_obj);
 		});
 	}
 
-	function to_s(t) {
+	//
+	//t=tally_arr, n=total
+	function to_s(t, n) {
 		s = "";
-		for (key in t) {
-			s += key + ": " + t[key] + "<br>";
+		for (var i in t) {
+			var name = t[i]["name"];
+			var count = t[i]["count"];
+			s += name + ": <b>" + count + "</b> (" + ((count/n)*100).toFixed(2) + "%)" + "<br>";
 		}
 		return s;
 	}
