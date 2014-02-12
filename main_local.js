@@ -15,7 +15,8 @@ function main_local() {
 			$("#results").html(r);
 		});
 		//getSubmit(data);
-		test_parse(data);
+		//test_parse(data);
+		test_collected(data);
 
 	}); //end JSON req
 }
