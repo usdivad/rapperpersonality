@@ -50,6 +50,9 @@ function match_score(rapper1, rapper2) {
 	var score = 0;
 	//Returning 0 if either rapper is Chance and either one doesn't select "Acid"
 	if (rapper1["Rapper"] == "Chance The Rapper" || rapper2["Rapper"] == "Chance The Rapper") {
+		if (typeof rapper1["DrugOfChoice"] == "undefined") {
+			return 0;
+		}
 		drugs1 = rapper1["DrugOfChoice"].split(", ");
 		drugs2 = rapper2["DrugOfChoice"].split(", ");
 		if (drugs1.indexOf("Acid") == -1 || drugs2.indexOf("Acid") == -1) {

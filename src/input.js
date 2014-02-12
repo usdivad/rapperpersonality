@@ -300,12 +300,13 @@ function get_html(user, data) {
 	alt_artists(0, alternate_rappers);
 
 	//Data collection
-	var post_data = who["Rapper"] + " from " + to_s(user);
-	/*$.post("collect.php", {data: post_data, function(d) {
+	var now = new Date();
+	var post_data = who["Rapper"] + " from " + to_s(user) + " on " + now;
+	$.post("http://usdivad.com/rapperpersonality/collect.php", {data: post_data}, function(d) {
 		console.log(post_data);
 		console.log(d);
-	});*/
-
+	});
+	console.log(post_data);
 
 	return str;
 } //end get_html
@@ -313,7 +314,9 @@ function get_html(user, data) {
 function to_s(user) {
 	s = "{";
 	for (key in user) {
-		s+= key + ": " + user[key] + ",";
+		if (typeof user[key] != "undefined" && user[key] != "") {
+			s+= key + ":" + user[key] + ",";
+		}
 	}
 	s = s.slice(0, -1); //remove the last comma
 	return s + "}";
