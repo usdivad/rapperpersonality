@@ -1,11 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+	.chart div {
+		font: 10px sans-serif;
+		background-color: steelblue;
+		text-align: right;
+		padding: 3px;
+		margin: 1px;
+		color: white;
+	}
+
+	.chart {
+		margin-bottom: 10px;
+	}
+
+	#results {
+		font: 12px sans-serif;
+	}
+</style>
 <html>
 <body>
+	<div class="chart"></div>
 	<div id="results"></div>
 <script src="lib/jquery-1.10.2.min.js"></script>
+<script src="lib/d3.v3.min.js"></script>
 <script>
 	//Tally ho!
 	function tally() {
-		var rappers = ["Snoop Dogg","The Notorious B.I.G.","Kendrick Lamar","MC Hammer","Andre 3000","Danny Brown","Insane Clown Posse","Drake","Jay-Z","Kanye West","Eminem","Beastie Boys","2 Pac","Lil Wayne","Afrika Bambaataa","Action Bronson","Vanilla Ice","Riff Raff","Mac Miller","J. Cole","Chance The Rapper","Macklemore","Nas","Dr. Dre","Rick Ross","50 Cent","Redman","Tyler","Schoolboy Q","Wale","Pusha T","2 Chainz","Q-Tip","Busta Rhymes","Dmx","Ol' Dirty Bastard","Black Thought","Mos Def","Talib Kweli","Madlib","Wiz Khalifa","A$AP Rocky","A$AP Ferg","Childish Gambino","Bone Thugs N Harmony","Nicki Minaj","Deltron 3030","Run-D.M.C.","MF Doom","Chuck  D","Joey Bada$$","Lauryn Hill","Future","Method Man","Ghostface Killah","French Montana","Gucci Mane","Nelly","T- Pain","Ludacris","Big K.R.I.T.","Missy Elliot","Paul Wall","Slick Rick","Chief Keef","Fat Joe","P Diddy","Ja Rule","LL Cool J","Lil' Kim"];
 		
 		//Get the logged data
 		$.get("collected_data.txt", function(data) {
@@ -15,6 +36,7 @@
 			var total = 0;
 			var out = "";
 
+			//Counting frequency of each rapper
 			for (var i in lines) {
 				var line = lines[i];
 				var name_arr = line.match(/^(.+?(?= from))/);
@@ -33,7 +55,8 @@
 				}
 			}
 
-			//sort
+			//Construct and sort an array of name-count pairs
+			//Objects look like {"name":"DJ Dog Dick", "count":"666"}
 			for (key in tally_obj) {
 				obj = {};
 				obj["name"] = key;
@@ -55,11 +78,23 @@
 				}
 			});
 
+			//Print results
 			out += "Total results: " + total + "<br><br>";
 			out += to_s(tally_arr, total);
 			$("#results").html(out);
 			//console.log(tally_obj);
-		});
+
+
+			//D3 visualization
+			d3.select(".chart")
+				.selectAll("div")
+					.data(tally_arr)
+				.enter().append("div")
+					.style("width", function(d) {return d.count*10+"px";})
+					.text(function(d) {return d.count;});
+
+
+		}); //end ajax
 	}
 
 	//
