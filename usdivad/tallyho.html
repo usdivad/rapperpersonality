@@ -98,8 +98,8 @@
 
 			//D3 visualization
 			var height = 900,
-				width = 1800;
-				bar_width = width / tally_arr.length;
+				width = 800;
+				radius = 300;
 			var scale = d3.scale.linear()
 				.domain([0, tally_arr[0].count]) //remember it's sorted
 				.range([height-100, 0]);
@@ -108,44 +108,8 @@
 				.attr("height", height)
 				.attr("width", width);
 
-			var bar = chart.selectAll("g")
-					.data(tally_arr)
-				.enter().append("g")
-					.attr("transform", function(d, i) {
-						return "translate(" + i*bar_width + ",0)";
-					});
+			chart.data()
 
-			//Create the bars
-			bar.append("rect")
-				.attr("y", function(d) {return scale(d.count);})
-				.attr("height", function(d) {return height - scale(d.count);})
-				.attr("width", bar_width-2);
-
-			//Add counts
-			bar.append("text")
-				.attr("y", function(d) {return scale(d.count) + 10;})
-				.attr("x", bar_width/2)
-				.attr("dx", ".35em")
-				.style("text-anchor", "start")
-				.style("fill", "black")
-				.text(function(d) {return d.name;});
-
-			//Add names
-			bar.append("text")
-				.attr("y", function(d) {
-					var w = scale(d.count);
-					var offset = 15;
-					if (w > offset*2) {
-						return w + 0.8*offset;
-					}
-					else {
-						return w/2;
-					}
-				})
-				.attr("x", bar_width/2)
-				.attr("dx", ".35em")
-				.style("text-anchor", "start")
-				.text(function(d) {return d.count;});
 
 
 
