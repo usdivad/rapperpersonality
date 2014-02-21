@@ -130,19 +130,9 @@
 			.domain([0, arr[0].count]) //remember it's sorted
 			.range([height-100, 0]);
 
-		var color = function(i) {
-			if (i % 2 == 0) {
-				return "black";
-			}
-			else {
-				return "white";
-			}
-		}
-		/*
 		var color = d3.scale.ordinal()
 			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 			//.range(["#000000", "#ffffff"]);
-		*/
 
 		var chart = d3.select(".chart")
 			.attr("height", height)
@@ -177,12 +167,21 @@
 					var me = d3.select(this);
 					//var printed = false;
 					var idx = 0;
+					var centroid = outer_arc.centroid(my_data);
+					//console.log(centroid[0]);
 					me.style("fill", "steelblue");
 					arcs.append("text")
 						.attr("transform", function() {
-							return "translate(" + outer_arc.centroid(my_data)+100 + ")";
+							return "translate(" + centroid + ")";
 						})
-						.attr("text-anchor", "left")
+						.attr("text-anchor", function() {
+							if (centroid[0] == "-") { //negative x value
+								return "end";
+							}
+							else {
+								return "start";
+							}
+						})
 						.style("fill", "black")
 						//.attr("z-index", "1000")
 						.text(function() {
@@ -203,10 +202,7 @@
 				.on("mouseout", function(d) {
 					var me = d3.select(this);
 					var my_data = d;
-					me.style("fill", function(d, i) {
-						console.log(i);
-						return color(i);
-					});
+					me.style("fill", function(d) {return color(d.data.count);});
 					arcs.selectAll("text").remove(); 
 					//console.log(me.select("text"))
 				})
@@ -219,8 +215,8 @@
 					*/
 
 					//Scaled
-					console.log(i);
-					return color(i);
+					console.log(color(d.data.count));
+					return color(d.data.count);
 				});
 
 			/*
