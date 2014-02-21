@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
@@ -16,7 +17,7 @@
 	.chart text {
 		fill: white;
 		font: 10px;
-		text-anchor: middle;
+		text-anchor: start;
 	}
 
 	.chart {
@@ -102,58 +103,8 @@
 			//console.log(tally_obj);
 
 
-<<<<<<< HEAD
 			//Create pie
 			visualize(tally_arr);
-=======
-			//D3 visualization
-			var width = 500,
-				bar_height = 20;
-			var scale = d3.scale.linear()
-				.domain([0, tally_arr[0].count]) //remember it's sorted
-				.range([0, width-100]);
-
-			var chart = d3.select(".chart")
-				.attr("width", width)
-				.attr("height", bar_height * tally_arr.length);
-
-			var bar = chart.selectAll("g")
-					.data(tally_arr)
-				.enter().append("g")
-					.attr("transform", function(d, i) {
-						return "translate(0," + i*bar_height + ")";
-					});
-
-			bar.append("rect")
-				.attr("width", function(d) {return scale(d.count);})
-				.attr("height", bar_height-2);
-
-			bar.append("text")
-				.attr("x", function(d) {return scale(d.count) + 10;})
-				.attr("y", bar_height/2)
-				.attr("dy", ".35em")
-				.style("text-anchor", "start")
-				.style("fill", "black")
-				.text(function(d) {return d.name;});
-
-			bar.append("text")
-				.attr("x", function(d) {
-					var w = scale(d.count);
-					var offset = 15;
-					if (w > offset*2) {
-						return w - 0.8*offset;
-					}
-					else {
-						return w/2;
-					}
-				})
-				.attr("y", bar_height/2)
-				.attr("dy", ".35em")
-				.text(function(d) {return d.count;});
-
-
-
->>>>>>> master
 
 		}); //end ajax
 	}
