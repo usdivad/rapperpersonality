@@ -16,7 +16,7 @@
 	.chart text {
 		fill: white;
 		font: 10px;
-		text-anchor: start;
+		text-anchor: middle;
 	}
 
 	.chart {
@@ -97,19 +97,49 @@
 
 
 			//D3 visualization
-			var height = 900,
-				width = 800;
-				radius = 300;
+			var width = 500,
+				bar_height = 20;
 			var scale = d3.scale.linear()
 				.domain([0, tally_arr[0].count]) //remember it's sorted
-				.range([height-100, 0]);
+				.range([0, width-100]);
 
 			var chart = d3.select(".chart")
-				.attr("height", height)
-				.attr("width", width);
+				.attr("width", width)
+				.attr("height", bar_height * tally_arr.length);
 
-			chart.data()
+			var bar = chart.selectAll("g")
+					.data(tally_arr)
+				.enter().append("g")
+					.attr("transform", function(d, i) {
+						return "translate(0," + i*bar_height + ")";
+					});
 
+			bar.append("rect")
+				.attr("width", function(d) {return scale(d.count);})
+				.attr("height", bar_height-2);
+
+			bar.append("text")
+				.attr("x", function(d) {return scale(d.count) + 10;})
+				.attr("y", bar_height/2)
+				.attr("dy", ".35em")
+				.style("text-anchor", "start")
+				.style("fill", "black")
+				.text(function(d) {return d.name;});
+
+			bar.append("text")
+				.attr("x", function(d) {
+					var w = scale(d.count);
+					var offset = 15;
+					if (w > offset*2) {
+						return w - 0.8*offset;
+					}
+					else {
+						return w/2;
+					}
+				})
+				.attr("y", bar_height/2)
+				.attr("dy", ".35em")
+				.text(function(d) {return d.count;});
 
 
 
