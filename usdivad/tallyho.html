@@ -24,7 +24,7 @@
 	}
 
 	.arc path {
-		stroke: "blue";
+		stroke: "#fff";
 		stroke-width: 6;
 	}
 
@@ -154,10 +154,15 @@
 			arcs.append("path")
 				.attr("d", arc)
 				.on("mouseover", function(d) {
-					d3.select(this).select("text")
+					var me = d3.select(this);
+					me.select("text")
 						.text(function(d) {return d.data.name;});
-					d3.select(this).attr("fill", "steelblue");
+					me.style("fill", "steelblue");
 						console.log("save");
+				})
+				.on("mouseout", function(d) {
+					var me = d3.select(this)
+					me.style("fill", function(d) {return color(d.data.count);})
 				})
 				.style("fill", function(d,i) {
 					/*
@@ -168,6 +173,7 @@
 					*/
 
 					//Scaled
+					console.log(color(d.data.count));
 					return color(d.data.count);
 				});
 
