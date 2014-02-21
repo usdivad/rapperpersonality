@@ -77,6 +77,7 @@
 				obj = {};
 				obj["name"] = key;
 				obj["count"] = tally_obj[key];
+				obj["percent"] = (obj["count"]/total)*100; //Now that we have the total we can compute %s
 				//console.log(obj);
 				tally_arr.push(obj);
 			}
@@ -114,35 +115,53 @@
 		for (var i in t) {
 			var name = t[i]["name"];
 			var count = t[i]["count"];
-			s += name + ": <b>" + count + "</b> (" + ((count/n)*100).toFixed(2) + "%)" + "<br>";
+			var percent = t[i]["percent"];
+			s += name + ": <b>" + count + "</b> (" + percent.toFixed(2) + "%)" + "<br>";
 		}
 		return s;
 	}
 
 	//D3 visualization
 	function visualize(arr) {
-		var height = 500,
-			width = 500;
-			radius = Math.min(width, height)/2;
+		var radius = 250,
+			height = radius*4,
+			width = height;
 		var scale = d3.scale.linear()
 			.domain([0, arr[0].count]) //remember it's sorted
 			.range([height-100, 0]);
 
+		var color = function(i) {
+			if (i % 2 == 0) {
+				return "black";
+			}
+			else {
+				return "white";
+			}
+		}
+		/*
 		var color = d3.scale.ordinal()
 			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+			//.range(["#000000", "#ffffff"]);
+		*/
 
 		var chart = d3.select(".chart")
 			.attr("height", height)
 			.attr("width", width)
 			.data([arr]) //quest
 			.append("g")
-				.attr("transform", "translate(" + radius + "," + radius + ")");
+				.attr("transform", "translate(" + radius*1.125 + "," + radius*1.125 + ")");
 
 		var arc = d3.svg.arc()
 			.outerRadius(radius - 10)
 			.innerRadius(0);
 
+		//For labels
+		var outer_arc = d3.svg.arc()
+			.outerRadius(radius+10)
+			.innerRadius(radius+10);
+
 		var pie = d3.layout.pie()
+			.sort(null)
 			.value(function(d) {return d.count;});
 
 		var arcs = chart.selectAll("g.slice")
@@ -154,15 +173,42 @@
 			arcs.append("path")
 				.attr("d", arc)
 				.on("mouseover", function(d) {
+					var my_data = d;
 					var me = d3.select(this);
-					me.select("text")
-						.text(function(d) {return d.data.name;});
+					//var printed = false;
+					var idx = 0;
 					me.style("fill", "steelblue");
+					arcs.append("text")
+						.attr("transform", function() {
+							return "translate(" + outer_arc.centroid(my_data)+100 + ")";
+						})
+						.attr("text-anchor", "left")
+						.style("fill", "black")
+						//.attr("z-index", "1000")
+						.text(function() {
+							//We only print the LAST one
+							if (idx == arr.length - 1) {
+								console.log("x");
+								var s = my_data.data.name
+									+ " (" + my_data.data.percent.toFixed(2) + "%)";
+								//printed = true;
+								return s;
+							}
+							else {
+								idx += 1;
+							}
+						});
 						console.log("save");
 				})
 				.on("mouseout", function(d) {
-					var me = d3.select(this)
-					me.style("fill", function(d) {return color(d.data.count);})
+					var me = d3.select(this);
+					var my_data = d;
+					me.style("fill", function(d, i) {
+						console.log(i);
+						return color(i);
+					});
+					arcs.selectAll("text").remove(); 
+					//console.log(me.select("text"))
 				})
 				.style("fill", function(d,i) {
 					/*
@@ -173,10 +219,11 @@
 					*/
 
 					//Scaled
-					console.log(color(d.data.count));
-					return color(d.data.count);
+					console.log(i);
+					return color(i);
 				});
 
+			/*
 			arcs.append("text")
 				.attr("transform", function(d) {
 					return "translate(" + arc.centroid(d) + ")";
@@ -188,6 +235,7 @@
 						+ " (" + d.data.count + ")"
 					return s;
 				});
+			*/	
 
 
 		//chart.data()
@@ -195,11 +243,18 @@
 
 	function viz_test() {
 		var max = 100
+		var total = 0;
 		var arr = [
-			{"name":"Kendrick Lamar", count:rand_int(max)},
-			{"name":"James Blake", count:rand_int(max)},
-			{"name":"Kurt Vile", count:rand_int(max)}
+			{"name":"Kendrick Lamar", "count":rand_int(max)},
+			{"name":"James Blake", "count":rand_int(max)},
+			{"name":"Kurt Vile", "count":rand_int(max)}
 		];
+		for (var i in arr) {
+			total += arr[i]["count"];
+		}
+		for (var i in arr) {
+			arr[i]["percent"] = 100*arr[i]["count"]/total;
+		}
 		visualize(arr);
 		console.log(arr);
 	}
@@ -210,8 +265,8 @@
 
 	//Let's go
 	$(window).load(function() {
-		//tally();
-		viz_test();
+		tally();
+		//viz_test();
 	});
 
 
