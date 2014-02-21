@@ -23,6 +23,11 @@
 		margin-bottom: 10px;
 	}
 
+	.arc path {
+		stroke: "blue";
+		stroke-width: 6;
+	}
+
 </style>
 <html>
 <title>Tally ho!</title>
@@ -96,23 +101,8 @@
 			//console.log(tally_obj);
 
 
-			//D3 visualization
-			var height = 900,
-				width = 800;
-				radius = 300;
-			var scale = d3.scale.linear()
-				.domain([0, tally_arr[0].count]) //remember it's sorted
-				.range([height-100, 0]);
-
-			var chart = d3.select(".chart")
-				.attr("height", height)
-				.attr("width", width);
-
-			chart.data()
-
-
-
-
+			//Create pie
+			visualize(tally_arr);
 
 		}); //end ajax
 	}
@@ -129,11 +119,94 @@
 		return s;
 	}
 
+	//D3 visualization
+	function visualize(arr) {
+		var height = 500,
+			width = 500;
+			radius = Math.min(width, height)/2;
+		var scale = d3.scale.linear()
+			.domain([0, arr[0].count]) //remember it's sorted
+			.range([height-100, 0]);
 
+		var color = d3.scale.ordinal()
+			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+		var chart = d3.select(".chart")
+			.attr("height", height)
+			.attr("width", width)
+			.data([arr]) //quest
+			.append("g")
+				.attr("transform", "translate(" + radius + "," + radius + ")");
+
+		var arc = d3.svg.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var pie = d3.layout.pie()
+			.value(function(d) {return d.count;});
+
+		var arcs = chart.selectAll("g.slice")
+			.data(pie)
+			.enter()
+				.append("g")
+					.attr("class", "slice");
+
+			arcs.append("path")
+				.attr("d", arc)
+				.on("mouseover", function(d) {
+					d3.select(this).select("text")
+						.text(function(d) {return d.data.name;});
+					d3.select(this).attr("fill", "steelblue");
+						console.log("save");
+				})
+				.style("fill", function(d,i) {
+					/*
+					//Random color
+					var color = "hsl(" + Math.random()*360 + ",20%,50%)";
+					console.log(color);
+					return color;
+					*/
+
+					//Scaled
+					return color(d.data.count);
+				});
+
+			arcs.append("text")
+				.attr("transform", function(d) {
+					return "translate(" + arc.centroid(d) + ")";
+				})
+				.attr("text-anchor", "middle")
+				.attr("fill", "white")
+				.text(function(d, i) {
+					var s = d.data.name
+						+ " (" + d.data.count + ")"
+					return s;
+				});
+
+
+		//chart.data()
+	}
+
+	function viz_test() {
+		var max = 100
+		var arr = [
+			{"name":"Kendrick Lamar", count:rand_int(max)},
+			{"name":"James Blake", count:rand_int(max)},
+			{"name":"Kurt Vile", count:rand_int(max)}
+		];
+		visualize(arr);
+		console.log(arr);
+	}
+
+	function rand_int(n) {
+		return Math.floor(Math.random()*n);
+	}
+
+	//Let's go
 	$(window).load(function() {
-		tally();
+		//tally();
+		viz_test();
 	});
-
 
 
 
