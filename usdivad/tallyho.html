@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-	.chart div {
-		font: 10px sans-serif;
-		background-color: steelblue;
-		text-align: right;
-		padding: 3px;
-		margin: 1px;
-		color: white;
+	body {
+		font: 12px sans-serif;
+	}
+
+	#header {
+		margin-bottom: 20px;
+	}
+
+	.chart rect {
+		fill: steelblue;
+	}
+
+	.chart text {
+		fill: white;
+		font: 10px;
+		text-anchor: start;
 	}
 
 	.chart {
 		margin-bottom: 10px;
 	}
 
-	#results {
-		font: 12px sans-serif;
-	}
 </style>
 <html>
+<title>Tally ho!</title>
 <body>
-	<div class="chart"></div>
+	<div id="header">
+		<h1>Zumic Rapper Personality Quiz Statistics</h1>
+		<div>Data collection from a quiz I wrote and implemented for Zumic. Take the quiz <a href="http://zumic.com/rapper-personality-quiz/" target="_blank">here</a>!</div>
+	</div>
+	<svg class="chart"></svg>
 	<div id="results"></div>
 <script src="lib/jquery-1.10.2.min.js"></script>
 <script src="lib/d3.v3.min.js"></script>
@@ -86,12 +97,57 @@
 
 
 			//D3 visualization
-			d3.select(".chart")
-				.selectAll("div")
+			var height = 900,
+				width = 1800;
+				bar_width = width / tally_arr.length;
+			var scale = d3.scale.linear()
+				.domain([0, tally_arr[0].count]) //remember it's sorted
+				.range([height-100, 0]);
+
+			var chart = d3.select(".chart")
+				.attr("height", height)
+				.attr("width", width);
+
+			var bar = chart.selectAll("g")
 					.data(tally_arr)
-				.enter().append("div")
-					.style("width", function(d) {return d.count*10+"px";})
-					.text(function(d) {return d.count;});
+				.enter().append("g")
+					.attr("transform", function(d, i) {
+						return "translate(" + i*bar_width + ",0)";
+					});
+
+			//Create the bars
+			bar.append("rect")
+				.attr("y", function(d) {return scale(d.count);})
+				.attr("height", function(d) {return height - scale(d.count);})
+				.attr("width", bar_width-2);
+
+			//Add counts
+			bar.append("text")
+				.attr("y", function(d) {return scale(d.count) + 10;})
+				.attr("x", bar_width/2)
+				.attr("dx", ".35em")
+				.style("text-anchor", "start")
+				.style("fill", "black")
+				.text(function(d) {return d.name;});
+
+			//Add names
+			bar.append("text")
+				.attr("y", function(d) {
+					var w = scale(d.count);
+					var offset = 15;
+					if (w > offset*2) {
+						return w + 0.8*offset;
+					}
+					else {
+						return w/2;
+					}
+				})
+				.attr("x", bar_width/2)
+				.attr("dx", ".35em")
+				.style("text-anchor", "start")
+				.text(function(d) {return d.count;});
+
+
 
 
 		}); //end ajax
