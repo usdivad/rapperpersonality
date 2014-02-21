@@ -10,7 +10,7 @@
 	}
 
 	.chart rect {
-		fill: steelblue;
+		fill: "#4682B4";
 	}
 
 	.chart text {
@@ -97,7 +97,7 @@
 
 			//Print results
 			out += "Total results: " + total + "<br><br>";
-			out += to_s(tally_arr, total);
+			//out += to_s(tally_arr, total);
 			$("#results").html(out);
 			//console.log(tally_obj);
 
@@ -124,15 +124,26 @@
 	//D3 visualization
 	function visualize(arr) {
 		var radius = 250,
-			height = radius*4,
+			height = radius*2.5,
 			width = height;
 		var scale = d3.scale.linear()
 			.domain([0, arr[0].count]) //remember it's sorted
 			.range([height-100, 0]);
 
-		var color = d3.scale.ordinal()
+		var count_arr = [];
+		for (var i in arr) {
+			count_arr.push(arr[i].count);
+		}
+
+		/*var color = d3.scale.ordinal()
+			.domain(d3.range(0,arr.length))
 			.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 			//.range(["#000000", "#ffffff"]);
+		*/
+
+		var color = function(x) {
+			return "#d0743c";
+		}
 
 		var chart = d3.select(".chart")
 			.attr("height", height)
@@ -169,7 +180,8 @@
 					var idx = 0;
 					var centroid = outer_arc.centroid(my_data);
 					//console.log(centroid[0]);
-					me.style("fill", "steelblue");
+					me.style("fill", "#4682B4")
+						.style("opacity", "1");
 					arcs.append("text")
 						.attr("transform", function() {
 							return "translate(" + centroid + ")";
@@ -202,7 +214,10 @@
 				.on("mouseout", function(d) {
 					var me = d3.select(this);
 					var my_data = d;
-					me.style("fill", function(d) {return color(d.data.count);});
+					me.style("fill", function(d) {return color(d.data.count);})
+						.style("opacity", function(d) {
+					return (d.data.percent * 15) / 100; //*15 cos 7's about the max, /100 because %
+				});
 					arcs.selectAll("text").remove(); 
 					//console.log(me.select("text"))
 				})
@@ -217,6 +232,9 @@
 					//Scaled
 					console.log(color(d.data.count));
 					return color(d.data.count);
+				})
+				.style("opacity", function(d) {
+					return (d.data.percent * 15) / 100; //*15 cos 7's about the max, /100 because %
 				});
 
 			/*
