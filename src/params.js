@@ -52,7 +52,7 @@ var ageList = {
 var fashionList = {
 	"Avant-garde": 0,
 	"Hipster": 2.5,
-	"T shirt & jeans": 7.5,
+	"T shirt & Jeans": 7.5,
 	"Thuggin'": 10,
 	"Upscale": 5 
 }
@@ -75,6 +75,7 @@ var criminalList = {
 	"None": 0,
 }
 
+/*
 //conflating height and weight
 var fitnessList = {
 	"athletic": 8,
@@ -87,6 +88,7 @@ var fitnessList = {
 	"tall, fat": 7.5,
 	"tall, stocky": 7
 }
+*/
 
 //mentally incompetent < dumb < avg < reasonably smart < smart
 var intelligenceList = {
@@ -143,6 +145,17 @@ var soundList = {
 	"Underground/alternative": 2 
 }
 
+var zoneList = {
+	"Chilling": 0,
+	"Eating": 2,
+	"Playing video games": 4,
+	"Building a stronger community": 6,
+	"Working out": 7,
+	"Getting your freak on": 8,
+	"Making money": 9
+	"Fighting": 10,
+}
+
 var allParams = {
 	"DrugOfChoice": drugList,
 	"DrinkOfChoice": drinkList,
@@ -150,9 +163,10 @@ var allParams = {
 	"Fashion": fashionList,
 	"Region": regionList,
 	"CriminalHistory": criminalList,
-	"Food_Fitness_BodyType": fitnessList,
+	/*"Food_Fitness_BodyType": fitnessList,*/
 	"Intelligence": intelligenceList,
 	"PimpHand": pimpList,
 	"Tattoos": tattoosList,
-	"Sound": soundList
+	"Sound": soundList,
+	"Zone": zoneList
 };
