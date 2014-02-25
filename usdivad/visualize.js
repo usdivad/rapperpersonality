@@ -2,7 +2,7 @@
 function visualize_pie(arr) {
     var radius = 250,
         height = radius*2.5,
-        width = height;
+        width = height + 100;
     var scale = d3.scale.linear()
         .domain([0, arr[0].count]) //remember it's sorted
         .range([height-100, 0]);
