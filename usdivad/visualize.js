@@ -132,6 +132,7 @@ function visualize_pie(arr) {
     //chart.data()
 }
 
+//Bostock's template http://bl.ocks.org/mbostock/4062045
 function visualize_links() {
     var width = 900,
         height = 800;
@@ -167,6 +168,14 @@ function visualize_links() {
           .style("fill", function(d) { return color(d.group); })
           .call(force.drag);
 
+      var texts = svg.selectAll("text.label")
+        .data(graph.nodes)
+        .enter().append("text")
+        .attr("class", "label")
+        .attr("fill", "black")
+        .style("font", "10px")
+        .text(function(d) {return d.name;});
+
       node.append("title")
           .text(function(d) { return d.name; });
 
@@ -186,6 +195,11 @@ function visualize_links() {
 
         node.attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
+
+        texts.attr("transform", function(d) {
+            return "translate(" + (d.x-10) + "," + (d.y-10) + ")";
+        })
+
       });
     });
 }
