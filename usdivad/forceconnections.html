@@ -16,6 +16,22 @@
     stroke-opacity: .6;
   }
 
+  #des1 {
+    color: #1f77b4;
+  }
+
+  #des2 {
+    color: #ff7f0e;
+  }
+
+  #des3 {
+    color: #2ca02c;
+  }
+
+  #des4 {
+    color: #d62728;
+  }
+
 </style>
 <html>
 <title>Links between rapper personalities</title>
@@ -24,8 +40,8 @@
     <h1>Links Between Rapper Personalities</h1>
     <div>
       Using a force-directed graph to visualize links between rapper personalities as defined by Zumic's <a href="http://zumic.com/rapper-personality-quiz/" target="_blank">Rapper Personality Quiz</a>.<br>
-      Colors correspond to regional designations.<br>
-      Hover over a node to see which rapper it represents!
+      Colors correspond to regional designations: <span class="designation" id="des1">East Coast</span>, <span class="designation" id="des2">Mid West</span>, <span class="designation" id="des3">Dirty South</span>, and <span class="designation" id="des4">West Coast</span>.
+      <!--<br>Hover over a node to see which rapper it represents!-->
     </div>
   </div>
 <script src="lib/d3.v3.min.js"></script>

@@ -136,9 +136,10 @@ function visualize_pie(arr) {
 function visualize_links() {
     var width = 900,
         height = 800,
-        radius = 6;
+        radius = Math.max(width, height)/10;
 
-    var color = d3.scale.category20();
+    //var color = d3.scale.category20();
+    var color = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]; //4 colors, 4 regions
 
     var force = d3.layout.force()
         .charge(-1020)
@@ -166,7 +167,7 @@ function visualize_links() {
         .enter().append("circle")
           .attr("class", "node")
           .attr("r", 5)
-          .style("fill", function(d) { return color(d.group); })
+          .style("fill", function(d) { return color[d.group-1]; }) //assume color matches d.group size
           .call(force.drag);
 
       //http://stackoverflow.com/a/13369282
@@ -205,6 +206,10 @@ function visualize_links() {
 
       });
     });
+
+    //Try dynamic color assigning; do tmrw
+    /*d3.selectAll(".class")
+        .attr("fill", "steelblue");*/
 }
 
 function viz_test() {
