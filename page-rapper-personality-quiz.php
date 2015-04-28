@@ -1,6 +1,19 @@
 <!--Updated 2014/03/04 00:28 by David Su-->
+<link rel="stylesheet" href="http://zumic.com/wp-content/themes/zumic-backbone/library/css/style.css">
+<style type="text/css">
+div.concertsb6 h3{line-height:25px!important;}
+div.concertsb6 {margin-left: 0px!important;}
+
+
+.body-border label:hover:hover{
+	background-color: transparent;
+	font-weight: 900;
+}
+ 
+</style>
 <?php get_header(); ?>
-<div id="fb-root"></div>
+	<div id="fb-root"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 //fb
   window.fbAsyncInit = function() {
@@ -33,28 +46,135 @@
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
 </script>
-<div id="main-content">
-  <div id="left-column">
-    <article class="post">
-      <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-        <h1 class="page-title clearfix"><?php the_title(); ?></h1>
-        <?php the_content(__('Read more ...'));?>
-      <?php endwhile; else: ?>
-      <?php endif; ?>
-    </article>
-  </div>
 
-  <div id="sidebar">
-    <aside>
-      <?php include(TEMPLATEPATH."/r-ad-top.php");?>
-      <?php include(TEMPLATEPATH."/r-3-social-links.php");?>
-      <?php include(TEMPLATEPATH."/r-latest-news.php");?>
-      <?php include(TEMPLATEPATH."/above-fold-ad.php");?>
-      <?php include(TEMPLATEPATH."/r-ad.php");?>
-    </aside>
-  </div>
+
+
+
+
+<div id="content" class="container">
+
+				<div id="inner-content" class="wrap clearfix">
+
+ 						<div id="main" class="grid-8 first clearfix" role="main">
+ 							
+ 							<div class="body-border">
+								<article class="main">
+							      <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+							      
+							        <h1 class="page-title clearfix"><?php the_title(); ?></h1>
+							        
+							        <?php the_content(__('Read more ...'));?>
+							      <?php endwhile; else: ?>
+							      <?php endif; ?>
+							    </article>
+							</div>
+						</div>
+
+
+
+
+						<div class="sidebar grid-4 last clearfix" role="complementary">
+
+							 <div class="block-newsletter-signup clearfix">
+                                 <?php include( TEMPLATEPATH."/parts/mailchimp-signup-form.php" ); ?>
+                             </div>
+<div class="concertsb6">
+            <h3></h3>
+            <div class="zumic-a clearfix">
+	     <a href="" target="_blank" style="width:310px;border:none;padding-left:12px;">
+            <img style="width:auto!important" src="http://zumic.com/wp-content/uploads/2015/03/zumic-logo-brushed-steel.png" >   
+        </a>
+
+	     <div class="sidebar-geotitle">
+
+           
+                
+          <hr style="margin-right:15px;margin-left:25px;height:.2%;"> 
+        </div>
+		
+	</div>	
+			   
+			    <div>
+			    <?php
+
+			        $args = array(
+			            'post_type' => array( 'post', 'music-videos' ), 
+			            'post_status' => 'publish', 
+			            'posts_per_page' => 2, 
+			            'orderby'  => 'menu_order',
+			            'tax_query' => array(
+			                array(
+			                    'taxonomy' => 'category',
+			                    'field' => 'slug',
+			                    'terms' => array( 'concert-announcements' ),
+			                    'operator' => 'IN'
+			                )
+			            ),  
+			          
+			        );
+
+			       	$the_query = new WP_Query($args);
+							while ( $the_query->have_posts() ) : $the_query->the_post();
+					?>
+							    
+							        <div class="item link" data-href="<?php the_permalink(); ?>">
+						                <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>">
+						                	 <?php the_post_thumbnail( 'col-4-img-thumb' ); ?>
+						                </a>
+						                <div class="single-title"><h3><?php the_title(); ?></h3></div>
+						            </div>					   
+					<?php 
+						endwhile;
+						wp_reset_postdata();
+					?>
+    </div>
 </div>
-<?php get_footer(); ?>
+
+  
+
+<br>
+
+							<div class="zumic-a" style="margin-top:auto;">
+								<?php echo get_adsense( get_the_ID(), '8828835930', '300x600' ); ?>
+							</div>
+
+<div class="concertsb6" >
+
+
+							<h2 class="title-headline">Popular Today</h2>
+
+
+<?php
+
+    the_widget(
+     'Clicky_Popular_Posts_Widget', [
+      'site_id'    =>  '100591291',
+      'site_key'   =>  '46a8d7ed022b30ce',
+      'number'     =>  4,
+      'post_types' =>  array( 'post', 'music-videos' ),
+      'date'       =>  'last-2-days',
+    
+       
+      ] 
+
+    );
+
+?>
+</div>
+
+
+							<?php get_sidebar(); ?>
+</div>
+						</div>
+
+
+			
+
+
+				</div>
+</div>
+
+<?php get_footer(); ?> 
 
 <style>
   label {
@@ -506,8 +626,8 @@ function get_html(user, data) {
 	var who = result_arr[0];
 	var NUM_OUTPUT = 6;
 	var custom_text = who["ResultText"];
-
-	var str = "<div id='results_div'>";
+	var str = "<div id='results_div' class='body-border' style='margin-left:25%;'>";
+	var whorapper = who["Rapper"].replace(/ /g, '-');
 
 	//Sample output; 
 	//Compatibility calculation
@@ -533,7 +653,7 @@ function get_html(user, data) {
 		str += " You are " + compatibility + "% compatible.";
 	}*/
 	str += "<div id='img_div'><img id='first_rapper_image'></div>";
-	str += "<br>Check out " + who["Rapper"] + "'s <a id='first_rapper_link'>Zumic artist page</a> for music, news, and tour dates."
+	str += "<br>Check out " + who["Rapper"] + " <a  href='http://zumic.com/artists/" + whorapper + "'>Zumic artist page</a> for music, news, and tour dates."
 	str += "</div>"; //end you_are
 
 
@@ -547,10 +667,13 @@ function get_html(user, data) {
 			i = NUM_OUTPUT;
 		}
 		else {
-			var name = alt_who["Rapper"];
+
+			
+			var name = alt_who["Rapper"].replace(/ /g, '-');
 			var id = "alt_rapper_" + i;
+			var namedis = alt_who["Rapper"];
 			alternate_rappers.push({"name": name, "id": id});
-			str += "<a id='" + id + "' href='http://zumic.com/post-type/artist-page'>" + name + "</a>";
+			str += "<a id='" + id + "' href='http://zumic.com/artists/" + name + "/'>" + namedis + "</a>";
 			/*if (high_compatibility) {
 				str += " (compatibility of " + compatibility_score(alt_who["Matches"], max_score) + "%)";
 			}*/
@@ -566,8 +689,7 @@ function get_html(user, data) {
 		}
 	}
 
-	str += "</div>"; //end results_div
-
+	
 
 	//Share: [facebook, twitter, google+, tumblr links]
 	str += "<br>";
@@ -583,6 +705,7 @@ function get_html(user, data) {
 	str += '<a href="https://twitter.com/share" id="twitter_share_result" class="twitter-share-button" data-url="' + url_self +'" data-text="Rapper Personality Quiz!" data-via="zumic"><img src="http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/twitter_share.png"></a>';
 
 	str += "<br><br>";
+	str += "</div>"; //end results_div
 
 	//TESTING: json get artists whose pages we do and don't have
 	/*
@@ -628,20 +751,27 @@ function get_html(user, data) {
 		"page": 0
 	}
 
-	$.getJSON(base_url, json_request, function(zumic_data) { //error-check the ind reqs
-		console.log(zumic_data);
-		var post = zumic_data["posts"][0];
-		var artist_page_url = "http://zumic.com/post-type/artist-page";
-		var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/jayz_small.png";
-		if (typeof post != "undefined") {
-			artist_page_url = post["url"];
-			try {
-				img_url = post["thumbnail_images"]["medium"]["url"];
-			}
-			catch(e) {
-				console.log("No image found, buddy");
-			}
-		}
+    // $.getJSON(base_url, json_request, function(zumic_data) { //error-check the ind reqs
+    $.post("http://zumic.com/rapper-personality-results", {rapper: who["Rapper"], alternate_rappers: alternate_rappers}, function(zumic_data) {
+		// console.log(zumic_data);
+		// var post = zumic_data["posts"][0];
+		// var artist_page_url = "http://zumic.com/post-type/artist-page";
+		// var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/jayz_small.png";
+		// if (typeof post != "undefined") {
+		// 	artist_page_url = post["url"];
+		// 	try {
+		// 		img_url = post["thumbnail_images"]["medium"]["url"];
+		// 	}
+		// 	catch(e) {
+		// 		console.log("No image found, buddy");
+		// 	}
+		// }
+
+        // NEW
+        console.log(zumic_data);
+        var post = "";
+        var artist_page_url = "http://zumic.com/";
+        var img_url = zumic_data;
 
 
 		//fb button
@@ -674,7 +804,8 @@ function get_html(user, data) {
 
 		//!!set attributes of html elems
 		$("#first_rapper_link").attr("href", artist_page_url);
-		$("#first_rapper_image").attr("src", img_url);
+		// $("#first_rapper_image").attr("src", img_url);
+        $("#img_div").html(img_url);
 		$("#subtitle").html("");
 
 		//fb old
@@ -730,6 +861,12 @@ function get_html(user, data) {
 	});
 	console.log(post_data);
 
+    // //Post to results page
+    // $.post("http://zumic.com/rapper-personality-results", {rapper: who["Rapper"], alternate_rappers: alternate_rappers}, function(d) {
+    //     console.log("Posted to results page");
+    //     console.log(d);
+    // });
+
 	return str;
 } //end get_html
 
@@ -754,8 +891,10 @@ function you_to_me(s) {
 	s = s.replace(/Your/g, "My");
 	s = s.replace(/you/g, "me");
 	s = s.replace(/You/g, "Me");
+
 	return s;
 }
+
 /*
  * MAINDO
  */
@@ -782,7 +921,7 @@ function main_local() {
 function main_wp() {
 
 	var data = [{"Rapper":"Snoop Dogg","Decade":"1990s, 2000s, 2010s","Region":"West Coast","Fashion":"T shirt & Jeans","Tattoos":"many","Intelligence":"Smart","PimpHand":"Legit Pimp","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You're laid back, with your mind on your money on your mind. Your rap personality is Snoop Dogg!"},
-{"Rapper":"The Notorious B.I.G.","Decade":"1990s","Region":"East Coast","Fashion":"Upscale","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Drug dealer","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Eating","ResultText":"Throw your hands in the air if you're a true player, your rap personality is Big Poppa!"},
+{"Rapper":"Notorious B.I.G.","Decade":"1990s","Region":"East Coast","Fashion":"Upscale","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Drug dealer","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Eating","ResultText":"Throw your hands in the air if you're a true player, your rap personality is Big Poppa!"},
 {"Rapper":"Kendrick Lamar","Decade":"2010s","Region":"West Coast","Fashion":"Hipster","Tattoos":"a few","Intelligence":"Smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Always changing","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"Macklemore thinks you're awesome. Your rap personality is Kendrick Lamar."},
 {"Rapper":"MC Hammer","Decade":"1980s, 1990s","Region":"West Coast","Fashion":"Avant-garde","Tattoos":"none","Intelligence":"Dumb","PimpHand":"Pussy whipped","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"Stop. Hammer time! Your rap personality is MC Hammer!"},
 {"Rapper":"Andre 3000","Decade":"1990s, 2000s","Region":"Dirty South","Fashion":"Avant-garde","Tattoos":"a few","Intelligence":"Smart","PimpHand":"Pussy whipped","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Playing video games","ResultText":"Stank you smelly much for playing, your rap personality is André 3000!"},
@@ -793,7 +932,7 @@ function main_wp() {
 {"Rapper":"Kanye West","Decade":"2000s, 2010s","Region":"East Coast, Mid West, Dirty South","Fashion":"Avant-garde","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Pussy whipped","CriminalHistory":"Assault","Sound":"Always changing","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Fighting","ResultText":"You'd rather be a dick than a swallower. Your rap personality is Kanye West!"},
 {"Rapper":"Eminem","Decade":"1990s, 2000s, 2010s","Region":"East Coast, Mid West","Fashion":"T shirt & Jeans","Tattoos":"many","Intelligence":"Street smart","PimpHand":"no standards","CriminalHistory":"Assault","Sound":"Pop, Classic","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"none","Zone":"Fighting","ResultText":"Your rap personality is the real Slim Shady. Please stand up."},
 {"Rapper":"Beastie Boys","Decade":"1980s, 1990s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"a few","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"Minor","Sound":"Underground/alternative","DrinkOfChoice":"Beer","DrugOfChoice":"Weed","Zone":"Building a stronger community","ResultText":"Your rap personality is the Beastie Boys, and you're now officially liscensed to ill."},
-{"Rapper":"2 Pac","Decade":"1990s","Region":"West Coast","Fashion":"Thuggin'","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Fighting","ResultText":"Thug life.  Your rap personality is 2Pac."},
+{"Rapper":"Tupac","Decade":"1990s","Region":"West Coast","Fashion":"Thuggin'","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Fighting","ResultText":"Thug life.  Your rap personality is 2Pac."},
 {"Rapper":"Lil Wayne","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"T shirt & Jeans","Tattoos":"facial","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Minor","Sound":"Dirty South","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Lean, Weed","Zone":"Getting your freak on","ResultText":"You've been handling the game so long, your thumb's bruised. Your rap personality is Lil Wayne."},
 {"Rapper":"Afrika Bambaataa","Decade":"1980s, 1990s","Region":"East Coast","Fashion":"Avant-garde","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic, Underground/alternative","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"Welcome to Planet Rock, your rap personality is Afrika Bambaataa."},
 {"Rapper":"Action Bronson","Decade":"2000s, 2010s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"many","Intelligence":"Street smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed, Cocaine","Zone":"Eating","ResultText":"You're posted up in the Galapagos, higher than an opera note. Your rap personality is Action Bronson!"},
@@ -816,14 +955,14 @@ function main_wp() {
 {"Rapper":"Q-Tip","Decade":"1990s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"You're abstract, and we're not talking about Picasso. Your rap personality is Q-Tip."},
 {"Rapper":"Busta Rhymes","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Avant-garde","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"Assault","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Working out","ResultText":"Woo hah!! You've got us all in check. Your rap personality is Busta Rhymes."},
 {"Rapper":"Dmx","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Thuggin'","Tattoos":"many","Intelligence":"Mentally incompetent","PimpHand":"no standards","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Bottom shelf liquor","DrugOfChoice":"Weed, Cocaine, Crack","Zone":"Working out","ResultText":"Your Wikipedia 'legal issues' section is more illustrious than your discography. Your rap personality is DMX."},
-{"Rapper":"Ol' Dirty Bastard","Decade":"1990s","Region":"East Coast","Fashion":"t shirt & Jeans","Tattoos":"a few","Intelligence":"Mentally incompetent","PimpHand":"no standards","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Crack, Cocaine","Zone":"Fighting","ResultText":"Your rap personality is the Osiris of this shit, AKA Ol' Dirty Bastard."},
+{"Rapper":"ol dirty bastard","Decade":"1990s","Region":"East Coast","Fashion":"t shirt & Jeans","Tattoos":"a few","Intelligence":"Mentally incompetent","PimpHand":"no standards","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Crack, Cocaine","Zone":"Fighting","ResultText":"Your rap personality is the Osiris of this shit, AKA Ol' Dirty Bastard."},
 {"Rapper":"Black Thought","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic, Underground/alternative","DrinkOfChoice":"Beer","DrugOfChoice":"Weed","Zone":"Building a stronger community","ResultText":"On your first day of high school, you had sex with a senior in the bathroom. Your rap personality is Black Thought."},
 {"Rapper":"Mos Def","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic, Underground/alternative","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"Your rap personality is most definitely Mos Def."},
 {"Rapper":"Talib Kweli","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"a few","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic, Underground/alternative","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed","Zone":"Building a stronger community","ResultText":"Kanye used to name-drop you to pick up girls. Your rap personality is Talib Kweli."},
 {"Rapper":"Madlib","Decade":"1990s, 2000s, 2010s","Region":"West Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Playing video games","ResultText":"You must be one of America's Most Blunted, because your rap personality is Madlib!"},
 {"Rapper":"Wiz Khalifa","Decade":"2000s, 2010s","Region":"East Coast, Mid West","Fashion":"Hipster","Tattoos":"many","Intelligence":"Dumb","PimpHand":"Pussy whipped","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You are Kanye's eskimo bro, Wiz Khalifa."},
-{"Rapper":"A$AP Rocky","Decade":"2000s, 2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"Assault","Sound":"Underground/alternative","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed, Molly","Zone":"Fighting","ResultText":"Your rap personality is A$AP Rocky, you pretty motherfucker, you."},
-{"Rapper":"A$AP Ferg","Decade":"2000s, 2010s","Region":"Mid West, East Coast","Fashion":"Hipster","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Trap","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You must be a Trap Lord and/or Hood Pope, because your rap personality is A$AP Ferg!"},
+{"Rapper":"AsAP Rocky","Decade":"2000s, 2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"Assault","Sound":"Underground/alternative","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed, Molly","Zone":"Fighting","ResultText":"Your rap personality is A$AP Rocky, you pretty motherfucker, you."},
+{"Rapper":"AsAP Ferg","Decade":"2000s, 2010s","Region":"Mid West, East Coast","Fashion":"Hipster","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Trap","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You must be a Trap Lord and/or Hood Pope, because your rap personality is A$AP Ferg!"},
 {"Rapper":"Childish Gambino","Decade":"2000s, 2010s","Region":"West Coast, Dirty South","Fashion":"Hipster","Tattoos":"none","Intelligence":"Smart","PimpHand":"Pussy whipped","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Beer","DrugOfChoice":"Weed, Acid","Zone":"Playing video games","ResultText":"Your rap personality is Childish Gambino because, well, the internet."},
 {"Rapper":"Bone Thugs N Harmony","Decade":"1990s, 2000s","Region":"Mid West","Fashion":"T shirt & Jeans","Tattoos":"many","Intelligence":"Smart","PimpHand":"Semi-Pimp","CriminalHistory":"Assault","Sound":"Dirty South, Classic","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You are Krayzie, Layzie, Bizzy, Wish and Flesh-n all rolled into one. Your rap personality is Bone Thugs N Harmony!"},
 {"Rapper":"Nicki Minaj","Decade":"2000s, 2010s","Region":"East Coast","Fashion":"Upscale","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"None","Sound":"Pop","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"None","Zone":"Making money","ResultText":"You've got the largest barbie collection in the world. Your rap personality is Nicki Minaj."},
@@ -831,7 +970,7 @@ function main_wp() {
 {"Rapper":"Run-D.M.C.","Decade":"1980s, 1990s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Classic","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Making money","ResultText":"Peter Piper picked peppers, Run rocked rhymes, and you just took a quiz. Your rap personality is Run-DMC!"},
 {"Rapper":"MF Doom","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Avant-garde","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Playing video games","ResultText":"The mystery is finally solved! You, of all people, are MF DOOM."},
 {"Rapper":"Chuck  D","Decade":"1980's, 1990s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"Minor","Sound":"Classic, Underground/alternative","DrinkOfChoice":"Mountain Dew","DrugOfChoice":"None","Zone":"Building a stronger community","ResultText":"You are Public Enemy number one.  Your rap personality is Chuck D."},
-{"Rapper":"Joey Bada$$","Decade":"2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"a few","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Bottom shelf liquor, Beer","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You're the 19-year-old OG Swanklord. Your rap personality is Joey Bada$$"},
+{"Rapper":"Joey BadaSS","Decade":"2010s","Region":"East Coast","Fashion":"Hipster","Tattoos":"a few","Intelligence":"Smart","PimpHand":"no standards","CriminalHistory":"None","Sound":"Underground/alternative","DrinkOfChoice":"Bottom shelf liquor, Beer","DrugOfChoice":"Weed","Zone":"Chilling","ResultText":"You're the 19-year-old OG Swanklord. Your rap personality is Joey Bada$$"},
 {"Rapper":"Lauryn Hill","Decade":"1990s, 2000s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"none","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Classic","DrinkOfChoice":"Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Building a stronger community","ResultText":"You've got 'That Thing.' Your rap personality is Lauryn Hill."},
 {"Rapper":"Future","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"Avant-garde","Tattoos":"many","Intelligence":"Dumb","PimpHand":"Pussy whipped","CriminalHistory":"Minor","Sound":"Pop, Trap","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed, Molly","Zone":"Making money","ResultText":"I'm just being honest, your rap personality is Future!"},
 {"Rapper":"Method Man","Decade":"1990s, 2000s","Region":"East Coast","Fashion":"T shirt & Jeans","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"Drug dealer","Sound":"Classic","DrinkOfChoice":"Beer, Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Fighting","ResultText":"You don't eat green eggs and ham, because your rap personality is Method Man!"},
@@ -842,7 +981,7 @@ function main_wp() {
 {"Rapper":"T- Pain","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"Avant-garde","Tattoos":"many","Intelligence":"Dumb","PimpHand":"no standards","CriminalHistory":"None","Sound":"Dirty South, Pop","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Getting your freak on","ResultText":"You fucked a mermaid! Your rap personality is T-Pain. "},
 {"Rapper":"Ludacris","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"T shirt & Jeans","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Dirty South","DrinkOfChoice":"Beer","DrugOfChoice":"Weed","Zone":"Getting your freak on","ResultText":"What's your fantasy?  Your rap personality is Ludacris."},
 {"Rapper":"Big K.R.I.T.","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"T shirt & Jeans","Tattoos":"a few","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Dirty South, Underground/alternative","DrinkOfChoice":"Bottom shelf liquor","DrugOfChoice":"Weed","Zone":"Building a stronger community","ResultText":"You must be on some country shit, because your rap personality is Big K.R.I.T."},
-{"Rapper":"Missy Elliot","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Avant-garde","Tattoos":"none","Intelligence":"Smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Getting your freak on","ResultText":"Supa dupa fly, your rap personality is Missy Elliot!"},
+{"Rapper":"Missy Elliott","Decade":"1990s, 2000s, 2010s","Region":"East Coast","Fashion":"Avant-garde","Tattoos":"none","Intelligence":"Smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Classic","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Getting your freak on","ResultText":"Supa dupa fly, your rap personality is Missy Elliot!"},
 {"Rapper":"Paul Wall","Decade":"2000s, 2010s","Region":"Dirty South","Fashion":"Thuggin'","Tattoos":"many","Intelligence":"Street smart","PimpHand":"Semi-Pimp","CriminalHistory":"None","Sound":"Dirty South","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed, Lean","Zone":"Chilling","ResultText":"You open up your mouth and see more carats than a salad. Your rap personality is Paul Wall!"},
 {"Rapper":"Slick Rick","Decade":"1980s, 1990s, 2000s","Region":"East Coast","Fashion":"Upscale","Tattoos":"none","Intelligence":"Street smart","PimpHand":"Legit Pimp","CriminalHistory":"Might have killed someone","Sound":"Classic","DrinkOfChoice":"Champagne/Wine","DrugOfChoice":"Pills, Weed","Zone":"Fighting","ResultText":"La di da di, it's time to party!  Your rap personality is Slick Rick!"},
 {"Rapper":"Chief Keef","Decade":"2010s","Region":"Mid West","Fashion":"Thuggin'","Tattoos":"many","Intelligence":"Mentally incompetent","PimpHand":"Legit Pimp","CriminalHistory":"Might have killed someone, Drug dealer","Sound":"Trap","DrinkOfChoice":"Top shelf liquor","DrugOfChoice":"Weed","Zone":"Fighting","ResultText":"Bang bang! Stay out of trouble, Chief Keef."},
@@ -876,3 +1015,27 @@ $(window).load(function() {
 	console.log("ready");
 });
 </script>
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
