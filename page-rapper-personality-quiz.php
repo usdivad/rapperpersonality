@@ -652,8 +652,9 @@ function get_html(user, data) {
 	/*if (high_compatibility) { //only if it's a high compatibility
 		str += " You are " + compatibility + "% compatible.";
 	}*/
-	str += "<div id='img_div'><img id='first_rapper_image'></div>";
-	str += "<br>Check out " + who["Rapper"] + " <a  href='http://zumic.com/artists/" + whorapper + "'>Zumic artist page</a> for music, news, and tour dates."
+    first_rapper_link = "http://zumic.com/artists/" + whorapper
+	str += "<div id='img_div'><a id='img_link' href='" + first_rapper_link + "'><img id='first_rapper_image'></a></div>";
+	str += "<br>Check out " + who["Rapper"] + "'s <a  href='" + first_rapper_link + "'>Zumic artist page</a> for music, news, and tour dates."
 	str += "</div>"; //end you_are
 
 
@@ -699,7 +700,7 @@ function get_html(user, data) {
 	//Facebook
 	//str += '<div id="fb_share_result" class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-width="700px" data-height="200px" width="500px" height="100px" data-type="button"></div>';
 	//str += '<div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-width="500px" data-type="button"></div>'
-	str += "<a id='fb_share_result' href='#'><img src='http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/fb_share.png'></a>";
+	str += "<a id='fb_share_result' href='" + "javascript:;" + "'><img src='http://zumic.com/wp-content/uploads/2014/01/fb_share.png'></a>";
 
 	//Twitter
 	str += '<a href="https://twitter.com/share" id="twitter_share_result" class="twitter-share-button" data-url="' + url_self +'" data-text="Rapper Personality Quiz!" data-via="zumic"><img src="http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/twitter_share.png"></a>';
@@ -756,7 +757,7 @@ function get_html(user, data) {
 		// console.log(zumic_data);
 		// var post = zumic_data["posts"][0];
 		// var artist_page_url = "http://zumic.com/post-type/artist-page";
-		// var img_url = "http://zumic.zumicentertainme.netdna-cdn.com/wp-content/uploads/2014/01/jayz_small.png";
+		// var img_url = "http://zumic.com/wp-content/uploads/2014/01/jayz_small.png";
 		// if (typeof post != "undefined") {
 		// 	artist_page_url = post["url"];
 		// 	try {
@@ -770,7 +771,7 @@ function get_html(user, data) {
         // NEW
         console.log(zumic_data);
         var post = "";
-        var artist_page_url = "http://zumic.com/";
+        // var artist_page_url = "http://zumic.com/";
         var img_url = zumic_data;
 
 
@@ -803,9 +804,10 @@ function get_html(user, data) {
 						+ "&via=zumic";
 
 		//!!set attributes of html elems
-		$("#first_rapper_link").attr("href", artist_page_url);
-		// $("#first_rapper_image").attr("src", img_url);
-        $("#img_div").html(img_url);
+		// $("#first_rapper_link").attr("href", artist_page_url);
+		$("#first_rapper_image").attr("src", img_url);
+        // $("#img_div").html(img_url);
+        // $("#img_link").attr("href", artist_page_url);
 		$("#subtitle").html("");
 
 		//fb old
